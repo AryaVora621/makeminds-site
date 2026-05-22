@@ -64,6 +64,20 @@ For the contact form to actually deliver mail in dev, set `RESEND_API_KEY` in `.
 - Placeholder content is flagged with `__placeholder: true` (build can warn before deploy).
 - Engineering Notebook posts live in `content/notebook/*.md` with YAML frontmatter (parsed by `lib/notebook.ts`).
 
+## Deploy (when ready)
+
+1. **Vercel**: import `AryaVora621/makeminds-site` at [vercel.com/new](https://vercel.com/new). Next 16 auto-detected. Build defaults are correct.
+2. **Env vars** (Vercel project → Settings → Environment Variables):
+   - `RESEND_API_KEY` — get from [resend.com/api-keys](https://resend.com/api-keys)
+   - `CONTACT_TO_EMAIL` — defaults to `info@makemindsrobotics.org`
+3. **Custom domain** (Vercel project → Settings → Domains): add `makemindsrobotics.org` and `www.makemindsrobotics.org`. Vercel will surface required DNS records.
+4. **IONOS DNS** (IONOS → Domains → makemindsrobotics.org → DNS):
+   - `A @ → 76.76.21.21`
+   - `CNAME www → cname.vercel-dns.com`
+   - TTL `3600`
+5. **Verify**: `dig makemindsrobotics.org` should resolve to Vercel within ~10 min.
+6. **Resend domain**: verify `makemindsrobotics.org` in [resend.com/domains](https://resend.com/domains), then swap `from:` in `app/api/contact/route.ts` to `noreply@makemindsrobotics.org`.
+
 ## Contact
 
 `info@makemindsrobotics.org`

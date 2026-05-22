@@ -24,8 +24,35 @@ export default async function NotebookPost({ params }: Props) {
 
   const tree = renderMarkdownToTree(post.body);
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    author: {
+      "@type": "SportsTeam",
+      name: "MakEMinds Robotics",
+      url: "https://makemindsrobotics.org",
+    },
+    publisher: {
+      "@type": "SportsTeam",
+      name: "MakEMinds Robotics",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://makemindsrobotics.org/icon.png",
+      },
+    },
+    mainEntityOfPage: `https://makemindsrobotics.org/notebook/${slug}`,
+    keywords: post.tags.join(", "),
+  };
+
   return (
     <main className="relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
         <Link
           href="/notebook"

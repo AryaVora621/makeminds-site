@@ -93,6 +93,43 @@ export default function RootLayout({
           name="x-mm-banner"
           content="-- MakEMinds Robotics // FTC Team 23786 // Edison NJ // recruiting: info@makemindsrobotics.org --"
         />
+        {/* Organization JSON-LD. Helps Google's Knowledge Graph attach our
+            FIRST team profile to brand searches. Handles flagged as placeholder
+            in BLOCKED.md item 4 until the user confirms. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SportsTeam",
+              name: "MakEMinds Robotics",
+              alternateName: "FTC 23786",
+              url: "https://makemindsrobotics.org",
+              logo: "https://makemindsrobotics.org/icon.png",
+              description:
+                "Student-led FIRST Tech Challenge robotics team from Edison, NJ. Team number 23786.",
+              sport: "Robotics",
+              memberOf: {
+                "@type": "Organization",
+                name: "FIRST Tech Challenge",
+                url: "https://www.firstinspires.org/robotics/ftc",
+              },
+              location: {
+                "@type": "Place",
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: "Edison",
+                  addressRegion: "NJ",
+                  addressCountry: "US",
+                },
+              },
+              sameAs: [
+                "https://instagram.com/makemindsrobotics",
+                "https://youtube.com/@makemindsrobotics",
+              ],
+            }),
+          }}
+        />
       </head>
       <body className="bg-grain min-h-full flex flex-col">
         {/* No-JS fallback: skip the boot fade entirely so the page is

@@ -62,6 +62,16 @@ html.mm-boot-done [data-boot-fade] {
   transform: translateY(0);
 }
 
+/*
+  Anchor-link offset so #section targets sit below the fixed TopNav
+  rather than under it. PLAN: 80px nav height.
+*/
+:target,
+section[id],
+article[id] {
+  scroll-margin-top: 96px;
+}
+
 body {
   font-family: var(--font-sans);
   font-feature-settings: "ss01", "cv11";

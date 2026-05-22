@@ -5,10 +5,14 @@
   Right half: live preview of the hovered page (blurb + accent meta).
   Open animates in via 12 vertical bars expanding from edges to fill;
   close reverses. Esc closes. Click outside closes.
+
+  Focus management: on open we move focus to the close button and trap
+  Tab inside the dialog; the previously focused element is restored on
+  close. PLAN §4 specs the keyboard-test path.
 */
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NAV } from "@/lib/nav";
 import { cn } from "@/lib/cn";
 
@@ -20,17 +24,44 @@ type Props = {
 
 export default function MenuOverlay({ open, onClose, activeHref }: Props) {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeBtnRef.current?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const root = overlayRef.current;
+      if (!root) return;
+      const focusables = Array.from(
+        root.querySelectorAll<HTMLElement>(
+          "a[href], button, [tabindex]:not([tabindex='-1'])",
+        ),
+      ).filter((el) => !el.hasAttribute("disabled"));
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     document.documentElement.style.overflow = "hidden";
     return () => {
       window.removeEventListener("keydown", onKey);
       document.documentElement.style.overflow = "";
+      previouslyFocused?.focus?.();
     };
   }, [open, onClose]);
 
@@ -41,6 +72,7 @@ export default function MenuOverlay({ open, onClose, activeHref }: Props) {
   return (
     <div
       id="mm-menu-overlay"
+      ref={overlayRef}
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
@@ -81,6 +113,7 @@ export default function MenuOverlay({ open, onClose, activeHref }: Props) {
             [ index ] / make-minds-robotics
           </p>
           <button
+            ref={closeBtnRef}
             type="button"
             onClick={onClose}
             className="group inline-flex items-center gap-2 border border-border px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg transition-colors hover:border-accent hover:text-accent"

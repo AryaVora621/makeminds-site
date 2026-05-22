@@ -121,8 +121,8 @@ Locked 2026-05-22. Sits as a "passport stamp" strip between the hero and the mis
 
 - Horizontal infinite scroll, right-to-left, **220s loop on desktop** (slower on mobile via media query so it doesn't burn battery).
 - Pulls all events from `content/achievements.json` — currently 27, dynamic going forward.
-- Each chip: `2025 · DECODE` (mono, accent-blue) · `Event name` (Space Grotesk 600) · `RESULT` (mono, muted).
-- Award-winning events get the event name in `--accent-hi` and result in `--accent`.
+- Each chip: `2025 · DECODE` (mono, accent-blue) · `Event name` (Space Grotesk 600, white) · `RESULT` (mono, muted). **Every chip is exactly 64px tall** — no variation in size, weight, or text color between regular and award chips.
+- Award-winning events are distinguished by a **2px accent-blue left border + a glowing accent dot** at the start of the chip. Never by text size or color. This keeps the strip visually uniform while still letting awards "pop" on scroll.
 - Edges fade to `--bg` (140px gradient mask) so chips don't pop in/out.
 - **Pause on hover**: animation pauses while pointer is over the strip.
 - **Manual scrubbing**: drag horizontally (mouse or touch) to scrub through events at your own pace. Trackpad horizontal-scroll + shift+wheel also work natively. Native scrollbar is hidden but `overflow-x: auto` remains so the container is genuinely scrollable.

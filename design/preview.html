@@ -360,6 +360,7 @@
 
     .marquee {
       display: flex;
+      align-items: center;             /* << belt-and-braces vertical centering */
       width: max-content;
       gap: 0;
       animation: marquee-slide 220s linear infinite;  /* << slowed from 120s → 220s */
@@ -372,19 +373,25 @@
       to   { transform: translateX(-50%); }
     }
     .m-item {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
+      display: inline-flex;
+      align-items: center;             /* << every chip vertically centered, same level */
+      gap: 18px;
       padding: 0 32px;
+      height: 64px;                    /* << fixed height = uniform baseline across all chips */
       border-left: 1px solid var(--border);
       white-space: nowrap;
+      position: relative;
+      transition: background 200ms ease;
     }
     .m-item:last-child { border-right: 1px solid var(--border); }
+
+    /* Uniform text styling across all chips, award or not.
+       Distinction is carried by the left-border color only. */
     .m-item .yr {
       font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.14em;
-      color: var(--accent);
+      color: var(--accent);          /* season tag stays accent-blue on every chip */
       text-transform: uppercase;
     }
     .m-item .nm {
@@ -393,6 +400,7 @@
       font-size: 20px;
       letter-spacing: -0.01em;
       color: var(--fg);
+      line-height: 1;                  /* prevents tall display-font line-box from offsetting center */
     }
     .m-item .re {
       font-family: var(--font-mono);
@@ -401,8 +409,21 @@
       color: var(--fg-muted);
       text-transform: uppercase;
     }
-    .m-item.award .nm { color: var(--accent-hi); }
-    .m-item.award .re { color: var(--accent); }
+
+    /* Award chips: distinguished only by a brighter, thicker left border + a small accent pip. */
+    .m-item.award {
+      border-left: 2px solid var(--accent);
+    }
+    .m-item.award::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px var(--accent);
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .marquee { animation: none; transform: translateX(0); }
@@ -603,12 +624,13 @@
   <section>
     <div class="marker">[ 04 ] <span class="accent">·</span> EVENTS · 27 TOTAL · 3 SEASONS</div>
     <h2>Events marquee</h2>
-    <p style="color: var(--fg-muted); max-width: 60ch; margin-bottom: 8px;">All 27 events, right-to-left at 220s loop. Hover to pause. Drag horizontally to scrub manually. Trackpad horizontal-scroll works too. Honors <code class="mono">prefers-reduced-motion</code>.</p>
+    <p style="color: var(--fg-muted); max-width: 60ch; margin-bottom: 8px;">All 27 events, right-to-left at 220s loop. Every chip is exactly 64px tall — award events are marked by an accent-blue left border + glow pip, not by changing text size or weight.</p>
 
     <div class="marquee-hint">
       <span>hover to pause</span>
       <span>drag or swipe to scrub</span>
       <span>shift + scroll wheel = horizontal</span>
+      <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent); margin-right:6px; transform: translateY(-1px);"></span>= award event</span>
     </div>
 
     <div class="marquee-wrap" id="marqueeWrap">

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { DM_Sans, Space_Grotesk, Geist_Mono } from "next/font/google";
 import BootLoader from "./_components/effects/BootLoader";
 import TopHairline from "./_components/effects/TopHairline";
+import PageTransition from "./_components/effects/PageTransition";
 import TopNav from "./_components/nav/TopNav";
+import Footer from "./_components/layout/Footer";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -59,7 +61,9 @@ export default function RootLayout({
         <TopNav />
         <div data-boot-fade className="flex flex-1 flex-col pt-20">
           {children}
+          <Footer />
         </div>
+        <PageTransition />
         <BootLoader />
       </body>
     </html>

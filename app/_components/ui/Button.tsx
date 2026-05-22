@@ -49,11 +49,14 @@ export default function Button<E extends ElementType = "button">({
   children,
   ...rest
 }: PolyProps<E>) {
-  const Tag = (as ?? "button") as ElementType;
+  // Loosen the type so React 19's stricter ElementType<children: never> default
+  // doesn't reject our generic <Tag>. The runtime constraint comes from the
+  // PolyProps signature, which already validates allowed props per element.
+  const Tag = (as ?? "button") as React.ElementType<{ className?: string; children?: ReactNode }>;
   return (
     <Tag
       className={cn(base, variants[variant], sizes[size], className)}
-      {...rest}
+      {...(rest as Record<string, unknown>)}
     >
       {children}
     </Tag>

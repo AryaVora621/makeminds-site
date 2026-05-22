@@ -65,21 +65,27 @@ export default async function NotebookPost({ params }: Props) {
 
       <article className="prose-mm mx-auto max-w-3xl px-6 pb-32 md:px-12 lg:px-0">
         {tree.map((node, i) => {
-          if (Array.isArray(node)) {
+          if (node.kind === "list") {
             return (
-              <ul key={i} className="my-5 list-none space-y-2 border-l border-border pl-4">
-                {node.map((li, j) => (
-                  <li key={j} className="text-[15px] leading-[1.7] text-fg-muted">
+              <ul
+                key={i}
+                className="my-5 list-none space-y-2 border-l border-border pl-4"
+              >
+                {node.items.map((text, j) => (
+                  <li
+                    key={j}
+                    className="text-[15px] leading-[1.7] text-fg-muted"
+                  >
                     <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-dim">
                       ›
                     </span>
-                    {li.text}
+                    {text}
                   </li>
                 ))}
               </ul>
             );
           }
-          if (node.tag === "h2")
+          if (node.kind === "heading" && node.level === 2)
             return (
               <h2
                 key={i}
@@ -88,7 +94,7 @@ export default async function NotebookPost({ params }: Props) {
                 {node.text}
               </h2>
             );
-          if (node.tag === "h3")
+          if (node.kind === "heading" && node.level === 3)
             return (
               <h3
                 key={i}
@@ -98,7 +104,10 @@ export default async function NotebookPost({ params }: Props) {
               </h3>
             );
           return (
-            <p key={i} className="mt-5 text-[15px] leading-[1.7] text-fg-muted">
+            <p
+              key={i}
+              className="mt-5 text-[15px] leading-[1.7] text-fg-muted"
+            >
               {node.text}
             </p>
           );

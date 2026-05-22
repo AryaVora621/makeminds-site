@@ -38,7 +38,7 @@ type Props = {
 
 export default function SeasonsTimeline({ seasonOrder, seasons }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  useDragScroll(ref);
+  useDragScroll(ref, { wheelToHorizontal: true });
 
   return (
     <div

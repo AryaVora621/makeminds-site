@@ -2,7 +2,7 @@
 
 ## Last updated
 
-2026-05-22 — typography + logo + contact pattern + events marquee all approved/locked. Build still paused.
+2026-05-22 — design phase complete and approved. All planning frozen. Ready to enter Phase 0 (Next.js scaffold) on next session.
 
 ## Completed this session
 
@@ -30,7 +30,7 @@ Nothing. Implementation paused at user's request.
 
 ## Next action
 
-Resume by opening this folder, reading `PLAN.md` then `TASK_QUEUE.md`, and starting Phase 0 (Scaffold). First concrete command:
+**Design is locked. Open `design/preview.html` to refresh on every approved decision before writing code.** Then resume Phase 0 (Scaffold). First concrete command:
 
 ```
 cd ~/Desktop/makeminds-site

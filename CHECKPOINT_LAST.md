@@ -2,7 +2,7 @@
 
 ## Last updated
 
-2026-05-22 — All five build phases shipped + polish pass (SEO, GSAP/Lenis bridge, pinned Mission, more notebook drafts, safety nets, a11y focus trap). Branch `feature/phase-0-scaffold` is 11 commits ahead of `main`.
+2026-05-22 (later) — Branch `feature/phase-0-scaffold` is now **20 commits ahead of `main`**. Three polish waves landed on top of the five implementation phases. Effectively every PLAN-locked feature buildable without user input is shipped.
 
 ## What's live on the branch
 
@@ -97,16 +97,36 @@ See `BLOCKED.md` for the punch list. Summary:
 
 ## Polish wave (post-phase-5)
 
-After the 5 phases shipped, did one more pass on items that surfaced as gaps:
+After the 5 phases shipped, did three more passes addressing PLAN gaps + infra/a11y/SEO improvements:
 
-- **SEO essentials**: `app/sitemap.ts` (all 8 NAV routes + notebook slugs), `app/robots.ts`, `app/opengraph-image.tsx` (Next 16 `@vercel/og` 1200×630, brand-black with accent dot).
-- **GSAP ↔ Lenis bridge**: single `gsap.ticker` rAF source drives Lenis; `lenis.on('scroll', ScrollTrigger.update)` keeps ScrollTrigger in sync. No more competing handlers.
-- **Mission pinned reveal**: PLAN §3 spec implemented — section pins for 1.2vh of scroll, meter scales 0→1 along the timeline, phrases fade up staggered.
-- **3 more notebook drafts**: control-loop tuning, summer-camp recap, design-review process — all flagged `__placeholder`. `/notebook` index now has 5 entries.
-- **Safety net**: `<noscript>` style forces `[data-boot-fade]` opacity:1 (no-JS users see the page); BootLoader has a 4s hard-guarantee timeout that flips `.mm-boot-done` no matter what.
-- **A11y**: focus trap on MenuOverlay (Tab cycles, Esc closes, previous focus restored on close); `scroll-margin-top: 96px` on `section[id]` so `/programs#ftc` lands below the fixed TopNav.
-- **README rewritten** with accurate stack (Next 16), route table, hidden interactions.
-- **`.nvmrc`** pinned to Node 24.
+### Wave 1 — SEO, GSAP/Lenis bridge, more notebook drafts, safety nets
+
+- **SEO essentials**: `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`.
+- **GSAP ↔ Lenis bridge**: single `gsap.ticker` rAF source drives Lenis; `lenis.on('scroll', ScrollTrigger.update)` keeps ScrollTrigger in sync.
+- **Mission pinned reveal** (PLAN §3): section pins for 1.2vh, meter scales 0→1, phrases fade up staggered.
+- **3 more notebook drafts**: control-loop tuning, summer-camp recap, design-review process.
+- **Safety nets**: `<noscript>` forces `[data-boot-fade]` opacity:1; BootLoader has a 4s hard-guarantee timeout.
+- **A11y**: focus trap on MenuOverlay; `scroll-margin-top: 96px` on anchored sections.
+- **README rewritten**, **`.nvmrc`** pinned to Node 24.
+
+### Wave 2 — scroll-aware nav, drag-scrub, Reveal primitive
+
+- **TopNav scroll-aware backdrop**: transparent over hero, `bg-bg/80` + backdrop-blur + hairline border once scrolled past 80px. Resets on route change.
+- **`/achievements` drag-scrub**: extracted into client SeasonsTimeline using new `lib/hooks/useDragScroll` — pointer drag mirrors the Marquee UX.
+- **`<Reveal>` primitive**: IntersectionObserver fade+lift wrapper. Programs page articles wrap in it for staggered entrance.
+
+### Wave 3 — per-page OG, RSS, view-source, card magnet, content-check
+
+- **Per-page OG images** for `/`, `/team`, `/programs`, `/robot`, `/contact`, `/achievements`, `/sponsors`, `/notebook`, **and per-post** for each notebook entry. Shared `lib/ogTemplate.tsx` renderer.
+- **Twitter card meta** (`summary_large_image`), site name, locale, authors, category in root metadata.
+- **viewport export** with themeColor + colorScheme (moved off metadata per Next 16 deprecation).
+- **Skip-to-content link** (`sr-only` until focused) + `id="main-content"` on the wrapper.
+- **RSS feed** at `/notebook/feed.xml` — hand-rolled RSS 2.0, 1h Cache-Control, auto-discovered via `metadata.alternates`.
+- **Vertical wheel → horizontal scroll** on `/achievements` (PLAN §3): `useDragScroll({wheelToHorizontal:true})` translates `deltaY` to `scrollLeft`, auto-releases at edges so vertical page scroll resumes naturally.
+- **View-source easter egg** (PLAN §7): meta `name=x-mm-banner` with the recruiting line.
+- **Card cursor magnet** (PLAN §5): `useCardMagnet` + `<MagneticCard>` — cards translate 4-6px toward cursor within 80px reach with a soft spring. CTA action cards opt in.
+- **`npm run content-check`** — walks `content/` for `__placeholder` flags, prints grouped per-file count. Warns only today; flip `--enforce` for CI gating later.
+- **`CONTENT_GUIDE.md`** — 10-section field-by-field guide for swapping every placeholder without touching code.
 
 ## Deferred (disk-blocked)
 

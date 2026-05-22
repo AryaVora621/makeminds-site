@@ -11,7 +11,7 @@ _(nothing yet — build hasn't started)_
 - [ ] `npx create-next-app@latest .` with TS + Tailwind v4 + App Router, inside this repo
 - [ ] Install deps: `framer-motion`, `gsap`, `lenis`, `three`, `@react-three/fiber`, `@react-three/drei`, `@react-three/postprocessing`, `resend`, `lucide-react`, `clsx`, `tailwind-merge`
 - [ ] Configure `tailwind.config.ts` with the token palette from `PLAN.md`
-- [ ] Set up self-hosted fonts (Geist, Geist Mono, PP Neue Montreal or Editorial New) via `next/font/local`
+- [ ] Wire fonts via `next/font/google`: Space Grotesk (display 700/900), DM Sans (body 400/500/700), Geist Mono (mono 400/500)
 - [ ] Add `lib/motion.ts` (shared easings, spring configs) and `lib/tokens.ts` (JS-readable color/space tokens)
 - [ ] Wire `LenisProvider`, `Cursor`, `NoiseOverlay`, `MouseGlow` into `app/layout.tsx`
 - [ ] Add `.env.example` with `RESEND_API_KEY=`
@@ -39,7 +39,7 @@ _(nothing yet — build hasn't started)_
 - [ ] Latest achievement card
 - [ ] Sponsor strip
 - [ ] CTA + footer
-- [ ] `<PageTransition>` — lime panel sweep
+- [ ] `<PageTransition>` — accent (`--accent` steel-blue) panel sweep
 - [ ] Lighthouse pass: Perf ≥ 90, A11y ≥ 95
 
 ## Open — Phase 3: Remaining P0 pages

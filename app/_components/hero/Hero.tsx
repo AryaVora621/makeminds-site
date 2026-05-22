@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import Headline from "./Headline";
 import ViewportReadout from "./ViewportReadout";
 import SectionLabel from "../layout/SectionLabel";
+import R3FBoundary from "./R3FBoundary";
 
 const WireRobot = dynamic(() => import("./WireRobot"), { ssr: false });
 
@@ -30,8 +31,11 @@ export default function Hero() {
         <ViewportReadout />
       </div>
 
-      {/* R3F scene sits absolutely behind the text */}
-      <WireRobot />
+      {/* R3F scene sits absolutely behind the text. Wrapped so a WebGL
+          failure degrades silently — the headline alone is still on-brand. */}
+      <R3FBoundary>
+        <WireRobot />
+      </R3FBoundary>
 
       <div className="relative mt-auto">
         <Headline lines={["MAKEMINDS", "ROBOTICS."]} />

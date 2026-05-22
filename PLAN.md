@@ -23,7 +23,7 @@ Scope: full redesign + rebuild, 8 pages, animated boot sequence, custom design s
 | Styling | Tailwind CSS v4 + CSS custom properties for theme tokens |
 | Motion | Framer Motion (component-level), GSAP + ScrollTrigger (scroll choreography), Lenis (smooth scroll) |
 | 3D / canvas | React Three Fiber + drei (hero, robot showcase). Postprocessing for bloom/chromatic. |
-| Fonts | `Geist` (UI body), `Geist Mono` (terminal, captions, numbers), `Editorial New` or `PP Neue Montreal` (display) — self-hosted via `next/font/local` |
+| Fonts | **DM Sans** (body), **Space Grotesk** (display / headlines), **Geist Mono** (mono / captions / metadata). All free, OFL, loaded via `next/font/google`. |
 | Icons | Lucide + custom SVGs |
 | CMS / content | MDX in-repo for blog (Engineering Notebook). Static JSON for team/sponsors/achievements. No external CMS in v1. |
 | Forms | Vercel serverless function → Resend for the contact form. No DB. |
@@ -54,11 +54,12 @@ A single saturated accent against warm-black + warm-white is the hackjps move an
 
 ### Typography scale
 
-- Display (hero, page H1s): `PP Neue Montreal` or `Editorial New`, 72–180px, tracking -0.04em, line-height 0.95
-- H2: 40–56px, tracking -0.02em
-- Body: Geist 16/26
-- Caption / metadata: Geist Mono 12/16, uppercase, tracking 0.08em
-- Numbers / counters: Geist Mono, tabular figures
+Locked 2026-05-22.
+
+- **Display** (hero, page H1s, section H2s): **Space Grotesk**, 700–900 weight, 72–180px on hero, 32–56px on section heads, tracking -0.02 to -0.04em, line-height 0.95.
+- **Body**: **DM Sans**, 400/500/700, 16/26.
+- **Caption / metadata / section labels**: **Geist Mono**, 12/16, uppercase, tracking 0.08em.
+- **Numbers / counters**: Geist Mono with tabular figures.
 
 Mono is used **structurally** — as section labels (`[01] / WHO`), timestamps, coordinate labels next to images, status indicators. Not decorative.
 
@@ -110,6 +111,19 @@ press [ enter ] to continue, or wait 1.2s
 - After the last line, the terminal collapses into a 1px horizontal line that flies to the top of the viewport and becomes the page's top hairline border. Coordinated handoff so it doesn't fade — it transforms.
 - LocalStorage flag `mm:booted=1` so returning visitors get a 0.4s minimal version. `?boot=full` query param replays the full sequence for showing off.
 - Skip-link respected; `prefers-reduced-motion` collapses the whole thing to a 200ms fade.
+
+### 1.5 Events marquee (Home, just below hero)
+
+Locked 2026-05-22. Sits as a "passport stamp" strip between the hero and the mission section.
+
+- Horizontal infinite scroll, right-to-left, **120s loop on desktop** (slower on mobile via media query so it doesn't burn battery).
+- Pulls all events from `content/achievements.json` — currently 27, dynamic going forward.
+- Each chip: `2025 · DECODE` (mono, lime) · `Event name` (Space Grotesk 600) · `RESULT` (mono, muted).
+- Award-winning events get the result text colored `--accent`.
+- Edges fade to `--bg` (140px gradient mask) so chips don't pop in/out.
+- Hover anywhere on the strip → animation pauses. Touch device: tap-and-hold pauses.
+- `prefers-reduced-motion: reduce` → static, no animation.
+- Implementation: render the list twice in the DOM (React `<Marquee>` component does this at mount), animate `translateX(0 → -50%)`. Linear easing. No JS scroll listeners — pure CSS so it never stutters.
 
 ### 2. Hero (Home page)
 

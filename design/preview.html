@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MakEMinds — design preview</title>
 
-  <!-- Free display fonts via Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Bricolage+Grotesque:wght@400;600;800&family=Anton&family=Archivo+Black&family=DM+Sans:wght@400;500;700;900&family=Inter:wght@400;500;700;900&family=Geist:wght@400;500;700;900&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Syne:wght@500;700;800&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -20,12 +19,16 @@
       --border: #1E2128;
       --accent: #C8FF00;
       --warn: #FF6B35;
+
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+      --font-mono:    'Geist Mono', ui-monospace, monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { background: var(--bg); color: var(--fg); }
     body {
-      font-family: 'Geist', system-ui, -apple-system, sans-serif;
+      font-family: var(--font-body);
       font-size: 16px;
       line-height: 1.55;
       padding: 64px 48px 120px;
@@ -36,11 +39,10 @@
         repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px);
     }
 
-    .mono { font-family: 'Geist Mono', 'JetBrains Mono', monospace; }
+    .mono { font-family: var(--font-mono); }
 
-    /* page chrome */
     .marker {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -50,14 +52,19 @@
     .marker .accent { color: var(--accent); }
 
     h1.page-title {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800;
+      font-family: var(--font-display);
+      font-weight: 700;
       font-size: clamp(48px, 7vw, 96px);
-      letter-spacing: -0.04em;
+      letter-spacing: -0.03em;
       line-height: 0.95;
       margin-bottom: 12px;
     }
-    .subtitle { color: var(--fg-muted); max-width: 64ch; margin-bottom: 56px; }
+    .subtitle {
+      color: var(--fg-muted);
+      max-width: 64ch;
+      margin-bottom: 56px;
+      font-size: 17px;
+    }
 
     section {
       border-top: 1px solid var(--border);
@@ -65,17 +72,17 @@
       margin-top: 80px;
     }
     section > h2 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 600;
-      font-size: 32px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 36px;
       letter-spacing: -0.02em;
       margin-bottom: 24px;
     }
 
     /* logo lab */
-    .logo-grid {
+    .logo-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 24px;
       margin-bottom: 24px;
     }
@@ -88,24 +95,33 @@
       align-items: center;
       gap: 16px;
     }
-    .logo-card svg { display: block; }
+    .logo-card.dark   { background: #000; }
+    .logo-card.elev   { background: var(--bg-elev); }
+    .logo-card.lime   { background: var(--accent); }
+    .logo-card.white  { background: #F4F4F1; }
+    .logo-card svg, .logo-card img, .logo-card object { display: block; }
     .logo-card .caption {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.1em;
       color: var(--fg-muted);
       text-transform: uppercase;
     }
-    .logo-card.dark { background: #000; }
-    .logo-card.light { background: #F4F4F1; color: #0A0B0E; }
-    .logo-card.light .caption { color: #4A4F58; }
-    .logo-card.accent svg { color: var(--accent); }
+    .logo-card.lime  .caption,
+    .logo-card.white .caption { color: #4A4F58; }
+
+    .logo-card .fav-strip {
+      display: flex;
+      align-items: end;
+      gap: 16px;
+    }
 
     .compare {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
-      align-items: center;
+      align-items: stretch;
+      margin-top: 16px;
     }
     .compare > div {
       background: var(--bg-elev);
@@ -116,79 +132,82 @@
       align-items: center;
       gap: 12px;
     }
-    .compare img { max-width: 320px; height: auto; display: block; }
+    .compare img, .compare object { max-width: 280px; height: auto; display: block; }
 
-    /* font picker */
-    .font-card {
-      border-top: 1px solid var(--border);
-      padding: 40px 0;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 32px;
+    /* typography lockup */
+    .type-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      padding: 48px;
+      margin-top: 16px;
     }
-    .font-card:first-of-type { border-top: none; padding-top: 24px; }
-    .font-meta {
-      font-family: 'Geist Mono', monospace;
+    .type-card .display {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(64px, 9vw, 128px);
+      letter-spacing: -0.03em;
+      line-height: 0.9;
+    }
+    .type-card .display em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .type-card .sub {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 28px;
+      letter-spacing: -0.01em;
+      color: var(--fg-muted);
+      margin-top: 16px;
+    }
+    .type-card .meta {
+      font-family: var(--font-mono);
       font-size: 11px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--fg-muted);
+      margin-top: 32px;
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      gap: 32px;
+      flex-wrap: wrap;
     }
-    .font-meta .label { color: var(--fg); font-size: 13px; }
-    .font-meta .pill {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid var(--border);
+    .type-card .body-sample {
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.6;
       color: var(--fg-muted);
-      padding: 3px 8px;
-      width: max-content;
-      font-size: 10px;
+      max-width: 64ch;
+      margin-top: 28px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
     }
-    .font-meta .pill.free { color: var(--accent); border-color: var(--accent); }
-    .font-meta .pill.paid { color: var(--warn); border-color: var(--warn); }
+    .type-card .body-sample strong { color: var(--fg); font-weight: 700; }
 
-    .sample .display {
-      font-size: clamp(56px, 8vw, 96px);
-      letter-spacing: -0.04em;
-      line-height: 0.95;
-      margin-bottom: 8px;
+    .type-stack {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 32px;
+      align-items: start;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      margin-top: 28px;
     }
-    .sample .lockup {
-      font-size: 22px;
-      letter-spacing: -0.01em;
-      line-height: 1.3;
+    .type-stack .label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: var(--fg-muted);
-      margin-bottom: 20px;
+      line-height: 1.6;
     }
-    .sample .body {
-      max-width: 60ch;
-      color: var(--fg-muted);
-    }
+    .type-stack .label b { color: var(--fg); display: block; font-weight: 700; }
+    .ts-h2  { font-family: var(--font-display); font-weight: 700; font-size: 44px; letter-spacing: -0.02em; line-height: 1; }
+    .ts-h3  { font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: -0.01em; }
+    .ts-body{ font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.6; color: var(--fg-muted); }
+    .ts-mono{ font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-muted); }
 
-    /* per-font typography */
-    .f-bricolage  .display, .f-bricolage  .lockup { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; }
-    .f-bricolage  .display { font-weight: 800; }
-    .f-bricolage  .lockup  { font-weight: 600; }
-    .f-space      .display, .f-space      .lockup { font-family: 'Space Grotesk', sans-serif; }
-    .f-space      .display { font-weight: 700; }
-    .f-space      .lockup  { font-weight: 500; }
-    .f-anton      .display, .f-anton      .lockup { font-family: 'Anton', sans-serif; letter-spacing: 0; }
-    .f-archivo    .display, .f-archivo    .lockup { font-family: 'Archivo Black', sans-serif; }
-    .f-dmsans     .display { font-family: 'DM Sans', sans-serif; font-weight: 900; }
-    .f-dmsans     .lockup  { font-family: 'DM Sans', sans-serif; font-weight: 500; }
-    .f-inter      .display { font-family: 'Inter', sans-serif; font-weight: 900; }
-    .f-inter      .lockup  { font-family: 'Inter', sans-serif; font-weight: 500; }
-    .f-geist      .display { font-family: 'Geist', sans-serif; font-weight: 900; }
-    .f-geist      .lockup  { font-family: 'Geist', sans-serif; font-weight: 500; }
-    .f-syne       .display { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
-    .f-syne       .lockup  { font-family: 'Syne', sans-serif; font-weight: 500; }
-    .f-unbounded  .display { font-family: 'Unbounded', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
-    .f-unbounded  .lockup  { font-family: 'Unbounded', sans-serif; font-weight: 500; }
-
-    /* contact form mock */
+    /* contact form */
     .contact-grid {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
@@ -196,22 +215,20 @@
       align-items: start;
       margin-top: 24px;
     }
+    @media (max-width: 880px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
     .contact-left h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800;
+      font-family: var(--font-display);
+      font-weight: 700;
       font-size: clamp(40px, 5vw, 64px);
-      letter-spacing: -0.04em;
+      letter-spacing: -0.03em;
       line-height: 1;
       margin-bottom: 24px;
     }
     .contact-left p { color: var(--fg-muted); max-width: 38ch; margin-bottom: 32px; }
 
-    .channels {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border-top: 1px solid var(--border);
-    }
+    .channels { border-top: 1px solid var(--border); }
     .channel {
       border-bottom: 1px solid var(--border);
       padding: 20px 0;
@@ -223,20 +240,22 @@
       color: var(--fg);
       transition: padding-left 220ms ease, background 220ms ease;
     }
-    .channel:hover { padding-left: 16px; background: linear-gradient(90deg, rgba(200,255,0,0.04), transparent 70%); }
+    .channel:hover { padding-left: 16px; background: linear-gradient(90deg, rgba(200,255,0,0.05), transparent 70%); }
     .channel .key {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--fg-muted);
     }
     .channel .val {
+      font-family: var(--font-display);
+      font-weight: 500;
       font-size: 22px;
       letter-spacing: -0.01em;
     }
     .channel .arrow {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       color: var(--fg-dim);
       transition: color 220ms ease, transform 220ms ease;
     }
@@ -248,21 +267,16 @@
       padding: 40px;
     }
     .contact-form .form-marker {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--fg-muted);
       margin-bottom: 24px;
     }
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
+    .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
     .field label {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -273,15 +287,13 @@
       border: none;
       border-bottom: 1px solid var(--border);
       padding: 10px 0;
-      font-family: inherit;
+      font-family: var(--font-body);
       font-size: 16px;
       color: var(--fg);
       outline: none;
       transition: border-color 200ms ease;
     }
-    .field input:focus, .field textarea:focus, .field select:focus {
-      border-bottom-color: var(--accent);
-    }
+    .field input:focus, .field textarea:focus, .field select:focus { border-bottom-color: var(--accent); }
     .field textarea { resize: vertical; min-height: 80px; }
 
     .submit-row {
@@ -291,16 +303,8 @@
       margin-top: 24px;
       gap: 16px;
     }
-    .submit-row .mailto-fallback {
-      font-family: 'Geist Mono', monospace;
-      font-size: 12px;
-      color: var(--fg-muted);
-    }
-    .submit-row .mailto-fallback a {
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-    }
+    .submit-row .mailto-fallback { font-family: var(--font-mono); font-size: 12px; color: var(--fg-muted); }
+    .submit-row .mailto-fallback a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
     .submit-row .mailto-fallback a:hover { border-bottom-color: var(--accent); }
 
     button.send {
@@ -308,7 +312,7 @@
       color: #0A0B0E;
       border: none;
       padding: 14px 28px;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -317,197 +321,178 @@
     }
     button.send:hover { transform: translateY(-1px); }
 
-    /* awards strip */
-    .awards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    /* ===== events marquee ===== */
+    .marquee-wrap {
+      margin-top: 24px;
+      position: relative;
+      width: calc(100% + 96px);
+      margin-left: -48px;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+      background:
+        linear-gradient(90deg, var(--bg), transparent 5%, transparent 95%, var(--bg)),
+        var(--bg);
+    }
+    .marquee-wrap::before,
+    .marquee-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 140px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
+
+    .marquee {
+      display: flex;
+      width: max-content;
+      gap: 0;
+      animation: marquee-slide 120s linear infinite;
+    }
+    .marquee:hover { animation-play-state: paused; }
+    @keyframes marquee-slide {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .m-item {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 0 32px;
+      border-left: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .m-item:last-child { border-right: 1px solid var(--border); }
+    .m-item .yr {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .m-item .nm {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+    }
+    .m-item .re {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+    }
+    .m-item.award .nm { color: var(--accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee { animation: none; transform: translateX(0); }
+    }
+
+    /* awards summary cards */
+    .awards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
     .award {
       background: var(--bg-elev);
       border: 1px solid var(--border);
       padding: 24px;
     }
-    .award .yr { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--fg-muted); }
-    .award .nm {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: -0.01em;
-      margin-top: 8px;
-    }
+    .award .yr { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--fg-muted); }
+    .award .nm { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; margin-top: 8px; }
     .award .ev { color: var(--fg-muted); font-size: 13px; margin-top: 4px; }
   </style>
 </head>
 <body>
-  <div class="marker">[ 00 ] <span class="accent">·</span> MAKEMINDS · DESIGN PREVIEW · 2026-05-22</div>
-  <h1 class="page-title">Pick a direction.</h1>
-  <p class="subtitle">Three things to review on this page: (1) the simplified SVG brand-mark vs. the original illustration, (2) eight display-font candidates, (3) the new contact pattern. Tell me which font you want and we lock it.</p>
+  <div class="marker">[ 00 ] <span class="accent">·</span> MAKEMINDS · DESIGN PREVIEW · 2026-05-22 · TYPE LOCKED</div>
+  <h1 class="page-title">Locked in.</h1>
+  <p class="subtitle">Your traced SVG, your fonts (DM Sans body, Space Grotesk display), the contact pattern you approved, and an infinite-scroll marquee feeding from all 27 events scraped from FTC-Events.</p>
 
-  <!-- ===== LOGO LAB ===== -->
+  <!-- ===== LOGO ===== -->
   <section>
     <div class="marker">[ 01 ] <span class="accent">·</span> LOGO</div>
-    <h2>Brand mark — three treatments</h2>
+    <h2>Brand mark — your traced SVG</h2>
 
-    <div class="logo-grid">
-      <div class="logo-card" style="color: var(--fg);">
-        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 200px; height: 200px;"></object>
-        <div class="caption">SVG · light on dark</div>
+    <div class="logo-row">
+      <div class="logo-card dark">
+        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 220px; height: 220px;"></object>
+        <div class="caption">SVG · on #000</div>
       </div>
-      <div class="logo-card accent">
-        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 200px; height: 200px;"></object>
-        <div class="caption">SVG · accent</div>
+      <div class="logo-card elev">
+        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 220px; height: 220px;"></object>
+        <div class="caption">SVG · on bg-elev</div>
       </div>
-      <div class="logo-card light">
-        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 200px; height: 200px;"></object>
-        <div class="caption">SVG · dark on light</div>
+      <div class="logo-card">
+        <div class="fav-strip">
+          <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 96px; height: 96px;"></object>
+          <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 48px; height: 48px;"></object>
+          <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 24px; height: 24px;"></object>
+          <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 16px; height: 16px;"></object>
+        </div>
+        <div class="caption">96 / 48 / 24 / 16 px · favicon stress test</div>
       </div>
     </div>
 
-    <div class="marker" style="margin-top: 32px;">FAVICON / SMALL-SIZE TEST</div>
-    <div class="logo-grid">
-      <div class="logo-card" style="color: var(--fg);">
-        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 96px; height: 96px;"></object>
-        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 48px; height: 48px;"></object>
-        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 24px; height: 24px;"></object>
-        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 16px; height: 16px;"></object>
-        <div class="caption">96 / 48 / 24 / 16 px</div>
-      </div>
-    </div>
-
-    <div class="marker" style="margin-top: 32px;">SIMPLIFIED SVG MARK vs. ORIGINAL ILLUSTRATION</div>
+    <div class="marker" style="margin-top: 32px;">SVG vs ORIGINAL PNG</div>
     <div class="compare">
       <div>
-        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 260px; height: 260px; color: var(--fg);"></object>
-        <div class="caption mono">SVG · hand-built · scales infinitely</div>
+        <object data="../public/logo-mark.svg" type="image/svg+xml" style="width: 280px; height: 280px;"></object>
+        <div class="caption mono">SVG · traced · 319 KB · scales infinitely</div>
       </div>
       <div>
         <img src="../public/logo-full.png" alt="Original MakEMinds logo">
-        <div class="caption mono">PNG · keep for hero / print at large size</div>
+        <div class="caption mono">PNG · 127 KB · keep as fallback / print</div>
+      </div>
+    </div>
+
+    <p class="mono" style="color: var(--fg-muted); font-size: 12px; letter-spacing: 0.08em; margin-top: 20px;">NOTE — SVG has baked-in fills (#050506, #649dc7, #ccd9e6). Renders identically on dark bg, can't be recolored. We'll optimize via SVGO at build to shrink the 319 KB.</p>
+  </section>
+
+  <!-- ===== TYPOGRAPHY LOCKED ===== -->
+  <section>
+    <div class="marker">[ 02 ] <span class="accent">·</span> TYPE · LOCKED</div>
+    <h2>Space Grotesk + DM Sans + Geist Mono</h2>
+
+    <div class="type-card">
+      <div class="display">MakEMinds<br><em>Robotics</em></div>
+      <div class="sub">A community building robots, mentors, and a new generation of engineers.</div>
+      <div class="meta">
+        <span>FTC TEAM <strong style="color: var(--fg);">23786</strong></span>
+        <span>EDISON, NJ</span>
+        <span>ROOKIE YEAR 2023</span>
+        <span>27 EVENTS · 8 AWARDS</span>
+      </div>
+      <div class="body-sample">
+        Body copy is set in <strong>DM Sans</strong>. Neutral, modern, designed for screens — the same sans Vercel docs and Linear use. Pairs cleanly with Space Grotesk above without competing for attention. Mono captions stay in Geist Mono for that structural-not-decorative feel.
+      </div>
+
+      <div class="type-stack">
+        <div class="label"><b>SPACE GROTESK 700</b>Display · H1 · H2</div>
+        <div class="ts-h2">Engineering Notebook</div>
+      </div>
+      <div class="type-stack">
+        <div class="label"><b>SPACE GROTESK 600</b>H3 · subhead</div>
+        <div class="ts-h3">2025–26 robot — DECODE season</div>
+      </div>
+      <div class="type-stack">
+        <div class="label"><b>DM SANS 400</b>Body</div>
+        <div class="ts-body">Our 2025 robot was built for the DECODE game piece flow. Custom intake, dual-stage extension, vision-guided alignment. The kinematics chain is documented in the build log alongside every design iteration we tested.</div>
+      </div>
+      <div class="type-stack">
+        <div class="label"><b>GEIST MONO 500</b>Caption · metadata</div>
+        <div class="ts-mono">[ 03 / 12 ] · CHASSIS · 14.2 KG · OPR 87.4</div>
       </div>
     </div>
   </section>
 
-  <!-- ===== FONT PICKER ===== -->
+  <!-- ===== CONTACT PATTERN (kept) ===== -->
   <section>
-    <div class="marker">[ 02 ] <span class="accent">·</span> DISPLAY FONT</div>
-    <h2>Eight candidates — pick one for headlines</h2>
-    <p style="color: var(--fg-muted); max-width: 60ch; margin-bottom: 32px;">Each card shows the same headline + section subtitle in a different display face. All eight are <strong style="color: var(--fg);">free, open-source, and on Google Fonts</strong> — no licensing cost. Pair with Geist Mono for captions/metadata across the board.</p>
-
-    <div class="font-card f-bricolage">
-      <div class="font-meta">
-        <span class="label">01 · Bricolage Grotesque</span>
-        <span>Atipo Foundry · 2023</span>
-        <span class="pill free">free · OFL</span>
-        <span>variable · grade + width</span>
-      </div>
-      <div class="sample">
-        <div class="display">MAKEMINDS<br>ROBOTICS</div>
-        <div class="lockup">FTC TEAM 23786 — EDISON, NJ</div>
-        <div class="body">Geometric humanist sans with variable grade. Feels editorial, slightly mechanical. Reads premium without trying. Strong recommendation.</div>
-      </div>
-    </div>
-
-    <div class="font-card f-unbounded">
-      <div class="font-meta">
-        <span class="label">02 · Unbounded</span>
-        <span>Yermolayev · 2023</span>
-        <span class="pill free">free · OFL</span>
-        <span>display · geometric</span>
-      </div>
-      <div class="sample">
-        <div class="display">MAKEMINDS<br>ROBOTICS</div>
-        <div class="lockup">FTC TEAM 23786 — EDISON, NJ</div>
-        <div class="body">Tight, futuristic, mechanical. Strong vertical stress. This is the most "2040" of the set — closest to what aerospace + robotics studios use today.</div>
-      </div>
-    </div>
-
-    <div class="font-card f-syne">
-      <div class="font-meta">
-        <span class="label">03 · Syne</span>
-        <span>Bonjour Monde · 2018</span>
-        <span class="pill free">free · OFL</span>
-        <span>display · editorial</span>
-      </div>
-      <div class="sample">
-        <div class="display">MAKEMINDS<br>ROBOTICS</div>
-        <div class="lockup">FTC TEAM 23786 — EDISON, NJ</div>
-        <div class="body">Geometric with character. Subtle quirks (the M, the A) give it personality. Used by Linear-adjacent design studios. Modern but not trendy.</div>
-      </div>
-    </div>
-
-    <div class="font-card f-space">
-      <div class="font-meta">
-        <span class="label">04 · Space Grotesk</span>
-        <span>Florian Karsten · 2018</span>
-        <span class="pill free">free · OFL</span>
-        <span>display · technical</span>
-      </div>
-      <div class="sample">
-        <div class="display">MAKEMINDS<br>ROBOTICS</div>
-        <div class="lockup">FTC TEAM 23786 — EDISON, NJ</div>
-        <div class="body">The de-facto choice for crypto / engineering / dev-tool sites. Safe. Strong. Slightly overused, which is the only argument against it.</div>
-      </div>
-    </div>
-
-    <div class="font-card f-geist">
-      <div class="font-meta">
-        <span class="label">05 · Geist</span>
-        <span>Vercel · 2023</span>
-        <span class="pill free">free · OFL</span>
-        <span>variable · neutral</span>
-      </div>
-      <div class="sample">
-        <div class="display">MAKEMINDS<br>ROBOTICS</div>
-        <div class="lockup">FTC TEAM 23786 — EDISON, NJ</div>
-        <div class="body">Vercel's house typeface. Built for screens, exceptional rendering on Mac/iPhone. Pair with Geist Mono. Neutral — relies on layout to feel distinct.</div>
-      </div>
-    </div>
-
-    <div class="font-card f-anton">
-      <div class="font-meta">
-        <span class="label">06 · Anton</span>
-        <span>Vernon Adams · 2011</span>
-        <span class="pill free">free · OFL</span>
-        <span>display · condensed</span>
-      </div>
-      <div class="sample">
-        <div class="display">MAKEMINDS<br>ROBOTICS</div>
-        <div class="lockup">FTC TEAM 23786 — EDISON, NJ</div>
-        <div class="body">Tall, condensed, brutalist. Used by skate / streetwear / fashion. Massive presence on the hero. Maybe too loud for a robotics team — depends on your taste.</div>
-      </div>
-    </div>
-
-    <div class="font-card f-archivo">
-      <div class="font-meta">
-        <span class="label">07 · Archivo Black</span>
-        <span>Omnibus-Type · 2012</span>
-        <span class="pill free">free · OFL</span>
-        <span>display · heavy</span>
-      </div>
-      <div class="sample">
-        <div class="display">MAKEMINDS<br>ROBOTICS</div>
-        <div class="lockup">FTC TEAM 23786 — EDISON, NJ</div>
-        <div class="body">Heavy industrial sans. Reads "engineering manual cover." Strong personality. Pairs well with mono captions. Less editorial than Bricolage.</div>
-      </div>
-    </div>
-
-    <div class="font-card f-dmsans">
-      <div class="font-meta">
-        <span class="label">08 · DM Sans</span>
-        <span>Colophon / Google · 2014</span>
-        <span class="pill free">free · OFL</span>
-        <span>variable · neutral</span>
-      </div>
-      <div class="sample">
-        <div class="display">MAKEMINDS<br>ROBOTICS</div>
-        <div class="lockup">FTC TEAM 23786 — EDISON, NJ</div>
-        <div class="body">The safest, most neutral option. Used by Notion, Vercel docs, Linear. If you want the design to disappear so the motion + layout carry the personality, this is the pick.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CONTACT FORM REDESIGN ===== -->
-  <section>
-    <div class="marker">[ 03 ] <span class="accent">·</span> CONTACT</div>
-    <h2>New contact pattern</h2>
-    <p style="color: var(--fg-muted); max-width: 60ch; margin-bottom: 32px;">Two halves. Left: hardcoded direct-contact links (email, IG, YouTube) — large, hover-reactive, mono-coded. Right: the actual form, posts to <code class="mono" style="color: var(--accent);">/api/contact</code> via Resend, with a <code class="mono" style="color: var(--accent);">mailto:</code> fallback below the submit so it always works even if JS is broken.</p>
+    <div class="marker">[ 03 ] <span class="accent">·</span> CONTACT · APPROVED</div>
+    <h2>Two-column contact pattern</h2>
+    <p style="color: var(--fg-muted); max-width: 60ch; margin-bottom: 32px;">Left: hardcoded direct-contact links. Right: the form, posting to <code class="mono" style="color: var(--accent);">/api/contact</code> via Resend, with a <code class="mono" style="color: var(--accent);">mailto:</code> fallback below the submit so it always works.</p>
 
     <div class="contact-grid">
       <div class="contact-left">
@@ -577,56 +562,71 @@
     </div>
   </section>
 
-  <!-- ===== AWARDS (pulled from FTC events) ===== -->
+  <!-- ===== EVENTS MARQUEE ===== -->
   <section>
-    <div class="marker">[ 04 ] <span class="accent">·</span> ACHIEVEMENTS · SCRAPED</div>
-    <h2>Award history (from FTC-Events.firstinspires.org)</h2>
-    <p style="color: var(--fg-muted); max-width: 60ch; margin-bottom: 24px;">Pulled live from the official FTC events database. Confirm these are right and we drop them into <code class="mono" style="color: var(--accent);">content/achievements.json</code>.</p>
+    <div class="marker">[ 04 ] <span class="accent">·</span> EVENTS · 27 TOTAL · 3 SEASONS</div>
+    <h2>Infinite events marquee</h2>
+    <p style="color: var(--fg-muted); max-width: 60ch; margin-bottom: 16px;">All 27 events scrolling continuously right-to-left at 120s loop. Hover to pause. Award-winning events highlighted in lime. Honors <code class="mono">prefers-reduced-motion</code> — static if you've got that on.</p>
 
-    <div class="awards">
-      <div class="award">
-        <div class="yr">2025 · DECODE</div>
-        <div class="nm">Inspire Award · 2nd Place</div>
-        <div class="ev">Central Conference Upper Central League Tournament</div>
-      </div>
-      <div class="award">
-        <div class="yr">2025 · DECODE</div>
-        <div class="nm">Finalist Alliance Captain</div>
-        <div class="ev">New Jersey Championship</div>
-      </div>
-      <div class="award">
-        <div class="yr">2025 · DECODE</div>
-        <div class="nm">Parkway Division Winning Alliance Captain</div>
-        <div class="ev">New Jersey Championship</div>
-      </div>
-      <div class="award">
-        <div class="yr">2024 · INTO THE DEEP</div>
-        <div class="nm">Inspire Award · 3rd Place</div>
-        <div class="ev">Central Conference Upper Central League Tournament</div>
-      </div>
-      <div class="award">
-        <div class="yr">2024 · INTO THE DEEP</div>
-        <div class="nm">Think Award</div>
-        <div class="ev">Central Conference Upper Central League Tournament</div>
-      </div>
-      <div class="award">
-        <div class="yr">2024 · INTO THE DEEP</div>
-        <div class="nm">Control Award</div>
-        <div class="ev">New Jersey Championship</div>
-      </div>
-      <div class="award">
-        <div class="yr">2024 · INTO THE DEEP</div>
-        <div class="nm">Turnpike Division Finalist Alliance Captain</div>
-        <div class="ev">New Jersey Championship</div>
-      </div>
-      <div class="award">
-        <div class="yr">2023 · CENTERSTAGE</div>
-        <div class="nm">Finalist Alliance · 1st Team Selected</div>
-        <div class="ev">Central Conference Tournament</div>
+    <div class="marquee-wrap">
+      <div class="marquee" id="marquee">
+        <!-- content cloned for seamless loop -->
+        <!-- 2025 DECODE -->
+        <div class="m-item"><span class="yr">2025 · DECODE</span><span class="nm">Central Practice Day</span><span class="re">PRACTICE</span></div>
+        <div class="m-item"><span class="yr">2025 · DECODE</span><span class="nm">P1-6 PM Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item"><span class="yr">2025 · DECODE</span><span class="nm">P2-7 Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item"><span class="yr">2025 · DECODE</span><span class="nm">P3-5 Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item award"><span class="yr">2025 · DECODE</span><span class="nm">Central Conference Upper Central League Tournament</span><span class="re">INSPIRE AWARD · 2ND</span></div>
+        <div class="m-item"><span class="yr">2025 · DECODE</span><span class="nm">United States Governors Cup</span><span class="re">COMPETED</span></div>
+        <div class="m-item award"><span class="yr">2025 · DECODE</span><span class="nm">New Jersey Championship</span><span class="re">FINALIST · PARKWAY WINNER</span></div>
+        <div class="m-item"><span class="yr">2025 · DECODE</span><span class="nm">NJ Championship — Parkway Division</span><span class="re">DIVISION</span></div>
+        <div class="m-item"><span class="yr">2025 · DECODE</span><span class="nm">FIRST Championship — Ross Division</span><span class="re">WORLDS</span></div>
+        <div class="m-item"><span class="yr">2025 · DECODE</span><span class="nm">FIRST Championship</span><span class="re">WORLDS</span></div>
+        <!-- 2024 INTO THE DEEP -->
+        <div class="m-item"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">P1 Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">P2 Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">NJ Remote Practice Judging</span><span class="re">PRACTICE</span></div>
+        <div class="m-item"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">P3 Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item award"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">Central Conference Upper Central League Tournament</span><span class="re">INSPIRE 3RD · THINK</span></div>
+        <div class="m-item award"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">New Jersey Championship</span><span class="re">CONTROL · TURNPIKE FINALIST</span></div>
+        <div class="m-item"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">NJ Championship — Turnpike Division</span><span class="re">DIVISION</span></div>
+        <div class="m-item"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">Michiana Premier Event — Thomson Division</span><span class="re">OFF-SEASON</span></div>
+        <div class="m-item"><span class="yr">2024 · INTO THE DEEP</span><span class="nm">Michiana Premier Event</span><span class="re">OFF-SEASON</span></div>
+        <!-- 2023 CENTERSTAGE -->
+        <div class="m-item"><span class="yr">2023 · CENTERSTAGE</span><span class="nm">P1 AM Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item"><span class="yr">2023 · CENTERSTAGE</span><span class="nm">P1 Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item"><span class="yr">2023 · CENTERSTAGE</span><span class="nm">P2 AM Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item"><span class="yr">2023 · CENTERSTAGE</span><span class="nm">P2 Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item"><span class="yr">2023 · CENTERSTAGE</span><span class="nm">P3 Upper Central League Meet</span><span class="re">LEAGUE MEET</span></div>
+        <div class="m-item award"><span class="yr">2023 · CENTERSTAGE</span><span class="nm">Central Conference Tournament</span><span class="re">FINALIST · 1ST PICK</span></div>
+        <div class="m-item"><span class="yr">2023 · CENTERSTAGE</span><span class="nm">NJ State Championship — Turnpike Division</span><span class="re">DIVISION</span></div>
+        <div class="m-item"><span class="yr">2023 · CENTERSTAGE</span><span class="nm">NJ State Championship</span><span class="re">STATE</span></div>
       </div>
     </div>
 
-    <div class="marker" style="margin-top: 24px;">ROOKIE YEAR 2023 · 27 OFFICIAL EVENTS · 2 FULL SEASONS</div>
+    <p class="mono" style="color: var(--fg-muted); font-size: 12px; letter-spacing: 0.08em; margin-top: 16px;">In the real build, the marquee duplicates its children at runtime (so the animation can translate -50% for a seamless loop). This preview duplicates them via JS below — same effect.</p>
+
+    <!-- Major awards summary -->
+    <h2 style="margin-top: 64px;">Major awards</h2>
+    <div class="awards">
+      <div class="award"><div class="yr">2025 · DECODE</div><div class="nm">Inspire Award · 2nd Place</div><div class="ev">Central Conference Upper Central League Tournament</div></div>
+      <div class="award"><div class="yr">2025 · DECODE</div><div class="nm">Finalist Alliance Captain</div><div class="ev">New Jersey Championship</div></div>
+      <div class="award"><div class="yr">2025 · DECODE</div><div class="nm">Parkway Division Winning Alliance Captain</div><div class="ev">New Jersey Championship</div></div>
+      <div class="award"><div class="yr">2024 · INTO THE DEEP</div><div class="nm">Inspire Award · 3rd Place</div><div class="ev">Central Conference Upper Central League Tournament</div></div>
+      <div class="award"><div class="yr">2024 · INTO THE DEEP</div><div class="nm">Think Award</div><div class="ev">Central Conference Upper Central League Tournament</div></div>
+      <div class="award"><div class="yr">2024 · INTO THE DEEP</div><div class="nm">Control Award</div><div class="ev">New Jersey Championship</div></div>
+      <div class="award"><div class="yr">2024 · INTO THE DEEP</div><div class="nm">Turnpike Division Finalist Alliance Captain</div><div class="ev">New Jersey Championship</div></div>
+      <div class="award"><div class="yr">2023 · CENTERSTAGE</div><div class="nm">Finalist Alliance · 1st Team Selected</div><div class="ev">Central Conference Tournament</div></div>
+    </div>
   </section>
+
+  <script>
+    // Duplicate marquee children so the -50% translate is seamless
+    (function () {
+      const m = document.getElementById('marquee');
+      if (!m) return;
+      m.innerHTML = m.innerHTML + m.innerHTML;
+    })();
+  </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 
 ## Last updated
 
-2026-05-22 — planning phase + design preview generated, build paused.
+2026-05-22 — typography + logo + contact pattern + events marquee all approved/locked. Build still paused.
 
 ## Completed this session
 
@@ -43,18 +43,26 @@ Then install the motion stack:
 npm i framer-motion gsap lenis three @react-three/fiber @react-three/drei @react-three/postprocessing resend lucide-react clsx tailwind-merge
 ```
 
-## Human decisions needed before next session
+## Locked decisions (no further input needed)
 
-1. **Logo asset**: ✅ Simplified SVG mark hand-built. May still want a `logo-lockup.svg` (mark + wordmark in chosen display font) — revisit after font pick.
-2. **Display font**: open `design/preview.html` in a browser, pick one of the 8 (all free / OFL). My ranking: **Bricolage Grotesque** > **Unbounded** > **Syne** > **Space Grotesk** > rest. Tell me which one wins.
-3. **Robot photos**: any high-res shots beyond the current Google Sites hero? Drive folder location?
-4. **Team roster**: roles + headshots + bios for each member — who owns gathering this?
-5. **Sponsor list**: current tier breakdown (Title / Gold / Silver / Friends) — confirm or adjust.
-6. **Resend account**: do you have one set up, or should I walk through creating it (free tier covers contact form volume)?
-7. **DNS at IONOS**: coach owns the IONOS account. When ready for cutover we'll need them to add an A record (`@ → 76.76.21.21`) and a CNAME (`www → cname.vercel-dns.com`).
-8. **Achievements**: open `design/preview.html` and confirm the 8 awards I scraped are correct + complete. Anything missing for 2026 season (AGE)?
-9. **YouTube URL**: I left the channel link as a placeholder — give me the real URL.
-10. **Instagram handle**: assumed `@makemindsrobotics` — confirm (or correct).
+- **Logo**: user's traced `image2vector.svg` is the canonical mark (saved to `public/logo-mark.svg`). Has baked-in colors — won't recolor — but renders beautifully on the dark bg. Optimize via SVGO during build.
+- **Display font**: **Space Grotesk** (700/600).
+- **Body font**: **DM Sans** (400/500/700).
+- **Mono font**: **Geist Mono** (400/500) — captions, metadata, terminal.
+- **Contact pattern**: two-column (channels left, form right) is approved.
+- **Events marquee**: confirmed as a Home-page block, infinite right-to-left, 120s, pause on hover, all 27 events.
+
+## Still open
+
+1. **Robot photos**: any high-res shots beyond the current Google Sites hero? Drive folder location?
+2. **Team roster**: roles + headshots + bios for each member — who owns gathering this?
+3. **Sponsor list**: current tier breakdown (Title / Gold / Silver / Friends) — confirm or adjust.
+4. **Resend account**: do you have one, or should I walk through creating it (free tier covers form volume)?
+5. **DNS at IONOS**: ✅ coach owns the account. When ready, they add `A @ → 76.76.21.21` and `CNAME www → cname.vercel-dns.com`.
+6. **Achievements**: confirm the 27 events + 8 awards are correct, and flag anything missing from the current 2026 AGE season.
+7. **YouTube URL**: I left the channel link as a placeholder — give me the real URL.
+8. **Instagram handle**: assumed `@makemindsrobotics` — confirm (or correct).
+9. **IG photos**: still need 8–12 of your favorite shots dropped into `public/images/` — couldn't scrape, IG blocks it.
 
 ## Open questions logged
 

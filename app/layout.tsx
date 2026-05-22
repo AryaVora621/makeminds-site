@@ -60,6 +60,14 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   authors: [{ name: "MakEMinds Robotics" }],
   category: "STEM education",
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": [
+        { url: "/notebook/feed.xml", title: "MakEMinds Robotics — Engineering Notebook" },
+      ],
+    },
+  },
 };
 
 export const viewport: Viewport = {

@@ -2,7 +2,13 @@
 
 ## Last updated
 
-2026-05-22 (latest) — Branch `feature/phase-0-scaffold` is now **23 commits ahead of `main`**. Latest wave (autonomous, code-review + SEO + audit):
+2026-05-22 (latest) — Branch `feature/phase-0-scaffold` is now **27 commits ahead of `main`**. Latest waves (autonomous, code-review + SEO + security + brand):
+
+- Brand: replaced default Next favicon with generated M-mark via `app/icon.tsx` + `app/apple-icon.tsx`; added `app/manifest.ts` so the site brands correctly when added to a home screen.
+- Security: 5 baseline headers (HSTS preload, nosniff, X-Frame DENY, Referrer-Policy strict-origin, Permissions-Policy disabling camera/mic/geo/FLoC), verified live.
+- Resilience: R3FBoundary wraps the WireRobot scene so a WebGL failure degrades silently.
+- npm audit findings logged in BLOCKED.md (2 moderate postcss vulns nested in Next 16 - not actionable until upstream patch).
+- Earlier wave (already documented):
 
 - React 19 strict-mode lint pass: new `lib/hooks/useMediaQuery.ts` (`useSyncExternalStore`) backs `useReducedMotion` / `useCoarsePointer`; removed `phaseRef.current = phase` anti-pattern in BootLoader; async `params` fix on notebook OG route; markdown renderer returns a discriminated union (`MarkdownBlock`). 6 remaining lint warnings are documented one-shot reads suppressed with targeted disables + justification.
 - JSON-LD: SportsTeam schema in root layout (FIRST Knowledge-Graph attach), TechArticle per notebook post.

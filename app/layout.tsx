@@ -63,6 +63,11 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${dmSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="bg-grain min-h-full flex flex-col">
+        {/* No-JS fallback: skip the boot fade entirely so the page is
+            visible even when scripts are disabled. */}
+        <noscript>
+          <style>{`[data-boot-fade]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <TopHairline />
         <TopNav />
         <div data-boot-fade className="flex flex-1 flex-col pt-20">

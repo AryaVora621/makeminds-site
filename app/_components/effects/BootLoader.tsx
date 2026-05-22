@@ -93,6 +93,18 @@ export default function BootLoader() {
   };
 
   useEffect(() => {
+    // Safety net: regardless of what happens in the typing path, force the
+    // handoff after 4s so the page never stays invisible if a timer is
+    // dropped, a state mutation throws, etc.
+    const safetyId = window.setTimeout(() => {
+      if (!document.documentElement.classList.contains(BOOT_DONE_CLASS)) {
+        markBooted();
+        document.documentElement.classList.add(BOOT_DONE_CLASS);
+        setPhase("done");
+      }
+    }, 4000);
+    timeoutsRef.current.push(safetyId);
+
     if (prefersReducedMotion()) {
       setReduced(true);
       const id = window.setTimeout(() => {

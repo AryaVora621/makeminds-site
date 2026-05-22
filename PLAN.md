@@ -33,24 +33,27 @@ Scope: full redesign + rebuild, 8 pages, animated boot sequence, custom design s
 
 ## Brand & visual language
 
-Design north star: dark-mode-first, monochrome with one electric accent, editorial layout, monospace as a structural element, motion as a first-class material.
+Design north star: dark-mode-first, brand-aligned steel-blue accent, editorial layout, monospace as a structural element, motion as a first-class material.
 
 ### Color tokens
 
+All values **sampled directly from the logo SVG** (`#050506`, `#555c65`, `#60758c`, `#649dc7`, `#ccd9e6`). The whole palette descends from the mark — no warm accent, no off-brand surprises.
+
 ```
---bg          #0A0B0E   near-black, not pure black (less harsh, better for OLED + bloom)
---bg-elev     #111318   one step up for cards
+--bg          #050506   from logo background — true brand black
+--bg-elev     #0E1116   one step up, slightly cooler
 --bg-grain    layered SVG noise at 4% opacity over --bg
---fg          #F4F4F1   off-white (warmer than #FFF, reads premium)
---fg-muted    #8A8F98
---fg-dim      #4A4F58
---border      #1E2128
---accent      #C8FF00   electric lime — single hero accent, used sparingly
---accent-dim  #5A7300
+--fg          #E8EEF4   cool off-white (reads premium against the steel palette)
+--fg-muted    #8090A4   muted steel
+--fg-dim      #555c65   from logo — borders, disabled text
+--border      #1A2028
+--accent      #649dc7   THE blue from the logo — primary accent
+--accent-hi   #ccd9e6   from logo — bright highlight (used sparingly)
+--accent-dim  #2E5878   hover wash, focus rings
 --warn        #FF6B35   reserved for terminal errors in boot loader only
 ```
 
-A single saturated accent against warm-black + warm-white is the hackjps move and what reads "design-led" vs "AI-generated gradient slop." Lime over the more obvious blue/cyan keeps the site from looking like every other robotics team.
+A steel-blue accent against true-black reads as "aerospace / engineering studio" rather than "AI-generated gradient slop." Pulling the palette straight from the mark guarantees the logo never looks pasted onto an unrelated background.
 
 ### Typography scale
 
@@ -116,14 +119,16 @@ press [ enter ] to continue, or wait 1.2s
 
 Locked 2026-05-22. Sits as a "passport stamp" strip between the hero and the mission section.
 
-- Horizontal infinite scroll, right-to-left, **120s loop on desktop** (slower on mobile via media query so it doesn't burn battery).
+- Horizontal infinite scroll, right-to-left, **220s loop on desktop** (slower on mobile via media query so it doesn't burn battery).
 - Pulls all events from `content/achievements.json` — currently 27, dynamic going forward.
-- Each chip: `2025 · DECODE` (mono, lime) · `Event name` (Space Grotesk 600) · `RESULT` (mono, muted).
-- Award-winning events get the result text colored `--accent`.
+- Each chip: `2025 · DECODE` (mono, accent-blue) · `Event name` (Space Grotesk 600) · `RESULT` (mono, muted).
+- Award-winning events get the event name in `--accent-hi` and result in `--accent`.
 - Edges fade to `--bg` (140px gradient mask) so chips don't pop in/out.
-- Hover anywhere on the strip → animation pauses. Touch device: tap-and-hold pauses.
-- `prefers-reduced-motion: reduce` → static, no animation.
-- Implementation: render the list twice in the DOM (React `<Marquee>` component does this at mount), animate `translateX(0 → -50%)`. Linear easing. No JS scroll listeners — pure CSS so it never stutters.
+- **Pause on hover**: animation pauses while pointer is over the strip.
+- **Manual scrubbing**: drag horizontally (mouse or touch) to scrub through events at your own pace. Trackpad horizontal-scroll + shift+wheel also work natively. Native scrollbar is hidden but `overflow-x: auto` remains so the container is genuinely scrollable.
+- While the user is interacting (dragging or trackpad-scrolling), animation stays paused; it resumes 600ms after the last wheel event and immediately on mouseleave after a drag.
+- `prefers-reduced-motion: reduce` → static, no animation, but manual scroll still works.
+- Implementation: render the list twice in the DOM (React `<Marquee>` component does this at mount), animate `translateX(0 → -50%)`. Linear easing. Pointer/touch handlers attached at component mount for the scrub interaction; CSS class toggles drive pause state to avoid React re-renders during drag.
 
 ### 2. Hero (Home page)
 

@@ -34,11 +34,12 @@ export default function PageTransition() {
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // 1. Snap to fully covering immediately.
+    // Effect drives a three-step DOM animation in response to a pathname
+    // change. Each setState is the "external system → React" callback
+    // arm of the rule (the external system being the router).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setState("cover");
-    // 2. Next frame, animate off-screen left.
     const id1 = window.setTimeout(() => setState("reveal"), 260);
-    // 3. After the reveal animation, return to idle (panel parked off right).
     const id2 = window.setTimeout(() => setState("idle"), 800);
     return () => {
       window.clearTimeout(id1);

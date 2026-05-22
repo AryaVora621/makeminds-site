@@ -9,8 +9,9 @@
   fades in simultaneously via the .mm-boot-done class on <html>.
 */
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { bootTiming } from "@/lib/motion";
+import { useReducedMotion } from "@/lib/hooks/useMediaQuery";
 
 type Phase = "idle" | "typing" | "ready" | "fading" | "done";
 
@@ -33,11 +34,6 @@ const FULL_LINES: Line[] = [
 const SHORT_LINES: Line[] = [
   { text: "[ make-minds-robotics.boot ]", tail: "ready" },
 ];
-
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
 
 function shouldPlayFull(): boolean {
   if (typeof window === "undefined") return false;
@@ -66,31 +62,29 @@ function pickSpeed(): number {
 export default function BootLoader() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [renderedLines, setRenderedLines] = useState<RenderedLine[]>([]);
-  const [reduced, setReduced] = useState(false);
+  const reduced = useReducedMotion();
   const skipRef = useRef(false);
   const timeoutsRef = useRef<number[]>([]);
-  const phaseRef = useRef<Phase>("idle");
-  phaseRef.current = phase;
 
-  const clearTimers = () => {
+  const clearTimers = useCallback(() => {
     for (const id of timeoutsRef.current) window.clearTimeout(id);
     timeoutsRef.current = [];
-  };
+  }, []);
 
-  const finish = () => {
-    if (phaseRef.current === "fading" || phaseRef.current === "done") return;
-    skipRef.current = true;
-    clearTimers();
-    setPhase("fading");
-    markBooted();
-    // Flip the class immediately so page content starts its fade-in
-    // in lockstep with the terminal's fade-out (PLAN: coordinated handoff).
-    document.documentElement.classList.add(BOOT_DONE_CLASS);
-    const id = window.setTimeout(() => {
-      setPhase("done");
-    }, bootTiming.handoffMs);
-    timeoutsRef.current.push(id);
-  };
+  // finish() reads the latest phase via the setState updater function, so
+  // we don't need a phaseRef synced during render.
+  const finish = useCallback(() => {
+    setPhase((cur) => {
+      if (cur === "fading" || cur === "done") return cur;
+      skipRef.current = true;
+      clearTimers();
+      markBooted();
+      document.documentElement.classList.add(BOOT_DONE_CLASS);
+      const id = window.setTimeout(() => setPhase("done"), bootTiming.handoffMs);
+      timeoutsRef.current.push(id);
+      return "fading";
+    });
+  }, [clearTimers]);
 
   useEffect(() => {
     // Safety net: regardless of what happens in the typing path, force the
@@ -105,8 +99,7 @@ export default function BootLoader() {
     }, 4000);
     timeoutsRef.current.push(safetyId);
 
-    if (prefersReducedMotion()) {
-      setReduced(true);
+    if (reduced) {
       const id = window.setTimeout(() => {
         markBooted();
         document.documentElement.classList.add(BOOT_DONE_CLASS);
@@ -118,6 +111,9 @@ export default function BootLoader() {
 
     const lines = shouldPlayFull() ? FULL_LINES : SHORT_LINES;
     const totalLines = lines.length;
+    // Initial state is "idle"; we promote to "typing" once we've confirmed
+    // we're not in the reduced-motion early-return path. One-shot, mount-only.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPhase("typing");
 
     let lineIndex = 0;
@@ -183,8 +179,10 @@ export default function BootLoader() {
     typeNextChar();
 
     return () => clearTimers();
+    // typeNextChar closes over finish via the autoFinish path; finish is
+    // memoized via useCallback so it's stable across renders.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reduced, clearTimers, finish]);
 
   // Any key skips.
   useEffect(() => {
@@ -204,8 +202,7 @@ export default function BootLoader() {
     window.addEventListener("keydown", onKey, { capture: true });
     return () =>
       window.removeEventListener("keydown", onKey, { capture: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase]);
+  }, [phase, finish]);
 
   if (phase === "done") return null;
 

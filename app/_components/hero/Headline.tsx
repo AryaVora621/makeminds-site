@@ -12,6 +12,7 @@
 */
 
 import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "@/lib/hooks/useMediaQuery";
 
 type Props = {
   // Each entry is a separate line. Whitespace inside is preserved.
@@ -20,11 +21,10 @@ type Props = {
 
 export default function Headline({ lines }: Props) {
   const [mounted, setMounted] = useState(false);
-  const [reduced, setReduced] = useState(false);
+  const reduced = useReducedMotion();
   const ref = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     // One frame delay so the initial state paints before the transition flips.
     const id = window.requestAnimationFrame(() => setMounted(true));
     return () => window.cancelAnimationFrame(id);

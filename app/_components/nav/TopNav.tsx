@@ -32,8 +32,10 @@ export default function TopNav() {
   }, []);
 
   // Reset scrolled state when route changes so the backdrop matches the
-  // new page's starting scroll position.
+  // new page's starting scroll position. One-shot read of window.scrollY
+  // synced from the router (external system) to React state.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setScrolled(window.scrollY > 80);
   }, [pathname]);
 

@@ -11,20 +11,21 @@
 */
 
 import { useEffect, useRef, useState } from "react";
+import { useReducedMotion, useCoarsePointer } from "@/lib/hooks/useMediaQuery";
 
 export default function Cursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
-  const [enabled, setEnabled] = useState(false);
+  const reduced = useReducedMotion();
+  const coarse = useCoarsePointer();
+  const enabled = !reduced && !coarse;
   const [hovering, setHovering] = useState(false);
   const target = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    setEnabled(true);
+    if (!enabled) return;
 
     const onMove = (e: MouseEvent) => {
       target.current.x = e.clientX;
@@ -67,7 +68,7 @@ export default function Cursor() {
       window.removeEventListener("mouseover", onOver);
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [enabled]);
 
   if (!enabled) return null;
 

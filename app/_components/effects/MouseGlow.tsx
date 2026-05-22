@@ -13,16 +13,17 @@
 */
 
 import { useEffect, useRef, useState } from "react";
+import { useReducedMotion, useCoarsePointer } from "@/lib/hooks/useMediaQuery";
 
 export default function MouseGlow() {
   const ref = useRef<HTMLDivElement>(null);
-  const [enabled, setEnabled] = useState(false);
+  const reduced = useReducedMotion();
+  const coarse = useCoarsePointer();
+  const enabled = !reduced && !coarse;
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    setEnabled(true);
+    if (!enabled) return;
 
     const onMove = (e: MouseEvent) => {
       const el = ref.current;
@@ -34,7 +35,7 @@ export default function MouseGlow() {
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+  }, [enabled]);
 
   if (!enabled) return null;
 

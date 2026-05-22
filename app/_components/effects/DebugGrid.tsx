@@ -11,7 +11,10 @@ export default function DebugGrid() {
   const [on, setOn] = useState(false);
 
   useEffect(() => {
+    // One-shot read of the URL on mount. The grid is a debug tool; we don't
+    // need to react to pushState changes (full reload toggles it).
     const params = new URLSearchParams(window.location.search);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOn(params.get("debug") === "1");
   }, []);
 

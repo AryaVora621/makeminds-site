@@ -78,23 +78,28 @@ export function loadPost(slug: string): NotebookPost | null {
   };
 }
 
-// Minimal markdown → React. Handles headings (##/###), paragraphs, lists,
-// and inline emphasis. Sufficient for engineering notes; swap for a real
-// renderer when the notebook outgrows it.
-export function renderMarkdownToTree(md: string): Array<{ tag: string; text: string }[] | { tag: string; text: string }> {
+// Minimal markdown → React. Handles headings (##/###), paragraphs, lists.
+// Sufficient for engineering notes; swap for next-mdx-remote when the
+// notebook outgrows it.
+export type MarkdownBlock =
+  | { kind: "heading"; level: 2 | 3; text: string }
+  | { kind: "paragraph"; text: string }
+  | { kind: "list"; items: string[] };
+
+export function renderMarkdownToTree(md: string): MarkdownBlock[] {
   const lines = md.split("\n");
-  const out: Array<{ tag: string; text: string }[] | { tag: string; text: string }> = [];
+  const out: MarkdownBlock[] = [];
   let paragraph: string[] = [];
   let listItems: string[] = [];
 
   const flushPara = () => {
     if (paragraph.length === 0) return;
-    out.push({ tag: "p", text: paragraph.join(" ") });
+    out.push({ kind: "paragraph", text: paragraph.join(" ") });
     paragraph = [];
   };
   const flushList = () => {
     if (listItems.length === 0) return;
-    out.push(listItems.map((t) => ({ tag: "li", text: t })));
+    out.push({ kind: "list", items: listItems });
     listItems = [];
   };
 
@@ -102,11 +107,11 @@ export function renderMarkdownToTree(md: string): Array<{ tag: string; text: str
     if (/^##\s+/.test(line)) {
       flushPara();
       flushList();
-      out.push({ tag: "h2", text: line.replace(/^##\s+/, "") });
+      out.push({ kind: "heading", level: 2, text: line.replace(/^##\s+/, "") });
     } else if (/^###\s+/.test(line)) {
       flushPara();
       flushList();
-      out.push({ tag: "h3", text: line.replace(/^###\s+/, "") });
+      out.push({ kind: "heading", level: 3, text: line.replace(/^###\s+/, "") });
     } else if (/^-\s+/.test(line)) {
       flushPara();
       listItems.push(line.replace(/^-\s+/, ""));

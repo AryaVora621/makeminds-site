@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Space_Grotesk, Geist_Mono } from "next/font/google";
 import BootLoader from "./_components/effects/BootLoader";
 import TopHairline from "./_components/effects/TopHairline";
@@ -48,8 +48,25 @@ export const metadata: Metadata = {
       "Student-led FTC robotics from Edison, NJ. 27 events, 8 awards, building since 2023.",
     type: "website",
     url: "/",
+    siteName: "MakEMinds Robotics",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MakEMinds Robotics · FTC 23786",
+    description:
+      "Student-led FTC robotics from Edison, NJ. 27 events, 8 awards, building since 2023.",
   },
   robots: { index: true, follow: true },
+  authors: [{ name: "MakEMinds Robotics" }],
+  category: "STEM education",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#050506",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -68,9 +85,20 @@ export default function RootLayout({
         <noscript>
           <style>{`[data-boot-fade]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
+        {/* Skip link for keyboard users — visually hidden until focused. */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:border focus:border-accent focus:bg-bg focus:px-4 focus:py-2 focus:font-mono focus:text-[11px] focus:uppercase focus:tracking-[0.18em] focus:text-accent"
+        >
+          Skip to content
+        </a>
         <TopHairline />
         <TopNav />
-        <div data-boot-fade className="flex flex-1 flex-col pt-20">
+        <div
+          id="main-content"
+          data-boot-fade
+          className="flex flex-1 flex-col pt-20"
+        >
           {children}
           <Footer />
         </div>

@@ -3,8 +3,8 @@ import { renderOg, ogSize, ogContentType } from "@/lib/ogTemplate";
 export const runtime = "edge";
 export const size = ogSize;
 export const contentType = ogContentType;
-export const alt = "MakEMinds Robotics · FTC Team 23786 · Edison NJ";
+export const alt = "Robot · MakEMinds Robotics · DECODE 2025-26";
 
 export default function OG() {
-  return renderOg({ title: ["MAKEMINDS", "ROBOTICS"], meta: "FTC TEAM 23786" });
+  return renderOg({ title: "ROBOT", meta: "DECODE · 2025–26 · FTC 23786" });
 }

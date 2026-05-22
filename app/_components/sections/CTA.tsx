@@ -6,6 +6,7 @@
 
 import Link from "next/link";
 import SectionLabel from "../layout/SectionLabel";
+import MagneticCard from "../ui/MagneticCard";
 
 const ACTIONS = [
   {
@@ -38,25 +39,26 @@ export default function CTA() {
       <SectionLabel index={6} label="Work with us" meta="three ways in" />
       <div className="mt-10 grid grid-cols-1 divide-y divide-border border-y border-border md:grid-cols-3 md:divide-x md:divide-y-0">
         {ACTIONS.map((a) => (
-          <Link
-            key={a.code}
-            href={a.href}
-            className="group flex flex-col gap-6 px-2 py-8 transition-colors hover:bg-bg-elev md:px-6"
-          >
-            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
-              [{a.code}]
-            </span>
-            <h3 className="font-display text-[clamp(1.8rem,3.5vw,2.6rem)] font-semibold leading-[1] tracking-[-0.02em] text-fg group-hover:text-accent">
-              {a.label}
-            </h3>
-            <p className="text-[14px] leading-[1.6] text-fg-muted">{a.blurb}</p>
-            <span
-              aria-hidden
-              className="mt-auto font-mono text-[12px] uppercase tracking-[0.18em] text-fg-dim group-hover:text-accent"
+          <MagneticCard key={a.code} pull={5}>
+            <Link
+              href={a.href}
+              className="group flex h-full flex-col gap-6 px-2 py-8 transition-colors hover:bg-bg-elev md:px-6"
             >
-              transmit →
-            </span>
-          </Link>
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
+                [{a.code}]
+              </span>
+              <h3 className="font-display text-[clamp(1.8rem,3.5vw,2.6rem)] font-semibold leading-[1] tracking-[-0.02em] text-fg group-hover:text-accent">
+                {a.label}
+              </h3>
+              <p className="text-[14px] leading-[1.6] text-fg-muted">{a.blurb}</p>
+              <span
+                aria-hidden
+                className="mt-auto font-mono text-[12px] uppercase tracking-[0.18em] text-fg-dim group-hover:text-accent"
+              >
+                transmit →
+              </span>
+            </Link>
+          </MagneticCard>
         ))}
       </div>
     </section>

@@ -87,6 +87,13 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${dmSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* View-source easter egg (PLAN §7). Recruiters welcome. */}
+        <meta
+          name="x-mm-banner"
+          content="-- MakEMinds Robotics // FTC Team 23786 // Edison NJ // recruiting: info@makemindsrobotics.org --"
+        />
+      </head>
       <body className="bg-grain min-h-full flex flex-col">
         {/* No-JS fallback: skip the boot fade entirely so the page is
             visible even when scripts are disabled. */}

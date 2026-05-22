@@ -3,6 +3,9 @@ import { DM_Sans, Space_Grotesk, Geist_Mono } from "next/font/google";
 import BootLoader from "./_components/effects/BootLoader";
 import TopHairline from "./_components/effects/TopHairline";
 import PageTransition from "./_components/effects/PageTransition";
+import KonamiTerminal from "./_components/effects/KonamiTerminal";
+import ConsoleBanner from "./_components/effects/ConsoleBanner";
+import DebugGrid from "./_components/effects/DebugGrid";
 import TopNav from "./_components/nav/TopNav";
 import Footer from "./_components/layout/Footer";
 import "./globals.css";
@@ -65,6 +68,9 @@ export default function RootLayout({
         </div>
         <PageTransition />
         <BootLoader />
+        <KonamiTerminal />
+        <ConsoleBanner />
+        <DebugGrid />
       </body>
     </html>
   );

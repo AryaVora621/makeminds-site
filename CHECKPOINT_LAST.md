@@ -2,7 +2,15 @@
 
 ## Last updated
 
-2026-05-22 (later) — Branch `feature/phase-0-scaffold` is now **20 commits ahead of `main`**. Three polish waves landed on top of the five implementation phases. Effectively every PLAN-locked feature buildable without user input is shipped.
+2026-05-22 (latest) — Branch `feature/phase-0-scaffold` is now **23 commits ahead of `main`**. Latest wave (autonomous, code-review + SEO + audit):
+
+- React 19 strict-mode lint pass: new `lib/hooks/useMediaQuery.ts` (`useSyncExternalStore`) backs `useReducedMotion` / `useCoarsePointer`; removed `phaseRef.current = phase` anti-pattern in BootLoader; async `params` fix on notebook OG route; markdown renderer returns a discriminated union (`MarkdownBlock`). 6 remaining lint warnings are documented one-shot reads suppressed with targeted disables + justification.
+- JSON-LD: SportsTeam schema in root layout (FIRST Knowledge-Graph attach), TechArticle per notebook post.
+- Bundle: root initial payload **167 KB gz** (budget 220 KB). R3F's 232 KB chunk is deferred via `requestIdleCallback`, doesn't count against first nav.
+- All 9 P0 routes return 200 with zero server-side errors in `npm run start` smoke.
+- TS strict `--noEmit` clean. ESLint clean. `npm run build` green.
+
+Effectively every PLAN-locked feature buildable without user input is shipped.
 
 ## What's live on the branch
 

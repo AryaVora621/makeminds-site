@@ -2,7 +2,7 @@
 
 ## Last updated
 
-2026-05-22 — All five build phases shipped end-to-end. Site is fully implemented (modulo Phase 6 content sourcing + Phase 7 deploy, both blocked on user actions). Branch `feature/phase-0-scaffold` is 7 commits ahead of `main`.
+2026-05-22 — All five build phases shipped + polish pass (SEO, GSAP/Lenis bridge, pinned Mission, more notebook drafts, safety nets, a11y focus trap). Branch `feature/phase-0-scaffold` is 11 commits ahead of `main`.
 
 ## What's live on the branch
 
@@ -94,6 +94,23 @@ See `BLOCKED.md` for the punch list. Summary:
 5. 8-12 IG photos dropped into `public/images/`
 6. Vercel project import + DNS cutover at IONOS
 7. Domain verification in Resend (then real `from:` sender)
+
+## Polish wave (post-phase-5)
+
+After the 5 phases shipped, did one more pass on items that surfaced as gaps:
+
+- **SEO essentials**: `app/sitemap.ts` (all 8 NAV routes + notebook slugs), `app/robots.ts`, `app/opengraph-image.tsx` (Next 16 `@vercel/og` 1200×630, brand-black with accent dot).
+- **GSAP ↔ Lenis bridge**: single `gsap.ticker` rAF source drives Lenis; `lenis.on('scroll', ScrollTrigger.update)` keeps ScrollTrigger in sync. No more competing handlers.
+- **Mission pinned reveal**: PLAN §3 spec implemented — section pins for 1.2vh of scroll, meter scales 0→1 along the timeline, phrases fade up staggered.
+- **3 more notebook drafts**: control-loop tuning, summer-camp recap, design-review process — all flagged `__placeholder`. `/notebook` index now has 5 entries.
+- **Safety net**: `<noscript>` style forces `[data-boot-fade]` opacity:1 (no-JS users see the page); BootLoader has a 4s hard-guarantee timeout that flips `.mm-boot-done` no matter what.
+- **A11y**: focus trap on MenuOverlay (Tab cycles, Esc closes, previous focus restored on close); `scroll-margin-top: 96px` on `section[id]` so `/programs#ftc` lands below the fixed TopNav.
+- **README rewritten** with accurate stack (Next 16), route table, hidden interactions.
+- **`.nvmrc`** pinned to Node 24.
+
+## Deferred (disk-blocked)
+
+- Mobile viewport sweep at 375px across all pages — Playwright errored with ENOSPC mid-sweep (disk at 1GB of 228GB free). Logged in `BLOCKED.md` item 9.
 
 ## Next action
 

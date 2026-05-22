@@ -1,0 +1,122 @@
+import SectionLabel from "../_components/layout/SectionLabel";
+import HairlineDivider from "../_components/layout/HairlineDivider";
+
+export const metadata = {
+  title: "Robot",
+  description:
+    "Current-season FTC robot for Team 23786 — specs, subsystems, and build journal.",
+};
+
+const SPECS = [
+  { label: "Season", value: "DECODE" },
+  { label: "Year", value: "2025-26" },
+  { label: "Mass", value: "16.2 kg" },
+  { label: "Drivetrain", value: "Mecanum" },
+  { label: "Top speed", value: "1.8 m/s" },
+  { label: "Auto routines", value: "04" },
+  { label: "Vision", value: "AprilTag" },
+  { label: "Control", value: "Java · OnBot" },
+];
+
+const SUBSYSTEMS = [
+  {
+    code: "01",
+    name: "Drivetrain",
+    blurb: "Four mecanum wheels, REV Hex Cores 5.4 ratio. PID on heading.",
+  },
+  {
+    code: "02",
+    name: "Intake",
+    blurb: "Compliant wheels on a sprung arm. Pivots out of bumper plane.",
+  },
+  {
+    code: "03",
+    name: "Scoring",
+    blurb: "Cascade lift, sprocket-driven. Closed-loop position control.",
+  },
+  {
+    code: "04",
+    name: "Vision",
+    blurb: "Limelight 3A, AprilTag pose estimation, MT2 for relocalization.",
+  },
+];
+
+export default function RobotPage() {
+  return (
+    <main className="relative">
+      <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
+        <SectionLabel index={4} label="Robot" meta="DECODE · 2025-26" />
+        <h1 className="mt-10 max-w-5xl font-display text-[clamp(2.8rem,8vw,6rem)] font-bold leading-[0.9] tracking-[-0.03em]">
+          The 2025-26<br />
+          <span className="text-accent">DECODE</span> machine.
+        </h1>
+        <p className="mt-6 max-w-xl text-fg-muted leading-[1.6]">
+          Mecanum drive, cascade scoring lift, vision-assisted autonomous.
+          Iterating weekly. Photos and CAD renders land here as the season
+          progresses.
+        </p>
+      </section>
+
+      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
+
+      <section className="px-6 pb-24 md:px-12 lg:px-20">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+          [a] / specs
+        </p>
+        <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden border border-border md:grid-cols-4">
+          {SPECS.map((s) => (
+            <div key={s.label} className="flex flex-col gap-2 bg-bg p-5">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
+                {s.label}
+              </dt>
+              <dd className="font-display text-[clamp(1.1rem,1.6vw,1.4rem)] font-semibold text-fg">
+                {s.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
+
+      <section className="px-6 pb-24 md:px-12 lg:px-20">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+          [b] / subsystems
+        </p>
+        <ul className="mt-8 grid grid-cols-1 gap-px bg-border md:grid-cols-2">
+          {SUBSYSTEMS.map((s) => (
+            <li key={s.code} className="flex flex-col gap-3 bg-bg p-6">
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
+                [{s.code}] {s.name}
+              </span>
+              <p className="text-[14px] leading-[1.6] text-fg-muted">{s.blurb}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
+
+      <section className="px-6 pb-24 md:px-12 lg:px-20">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+          [c] / gallery
+        </p>
+        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
+          placeholder — real photos drop after first regional
+        </p>
+        <div className="mt-8 grid grid-cols-2 gap-px bg-border md:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="relative aspect-[4/3] bg-bg-elev"
+            >
+              <div className="absolute inset-0 grid place-items-center font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
+                [ fig.{(i + 1).toString().padStart(2, "0")} — pending ]
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}

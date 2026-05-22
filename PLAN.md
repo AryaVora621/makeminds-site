@@ -162,7 +162,28 @@ App Router page transitions use a single horizontal panel sweep: lime panel slid
 | 05 | `/achievements` | P1 | Horizontal-scroll timeline of awards/results |
 | 06 | `/sponsors` | P1 | Tiered logo grid (Title / Gold / Silver / Friends), sponsor CTA, sponsor packet PDF link |
 | 07 | `/notebook` | P1 | MDX engineering blog index + post pages with code blocks, build-season tags |
-| 08 | `/contact` | P0 | Contact form (Resend), socials, FAQ accordion, location |
+| 08 | `/contact` | P0 | Two-column layout (see Contact Pattern below): direct-link channels + form (Resend), FAQ accordion |
+
+### Contact pattern (revised)
+
+The contact page splits in two:
+
+**Left column — direct channels**, large hover-reactive list, monospace-coded keys:
+
+```
+[ 01 / EMAIL    ]  info@makemindsrobotics.org      →
+[ 02 / INSTAGRAM]  @makemindsrobotics              ↗
+[ 03 / YOUTUBE  ]  MakEMinds Robotics              ↗
+[ 04 / LOCATION ]  Edison, NJ — USA                ·
+```
+
+Each row is a real anchor (`mailto:`, IG, YouTube). On hover: the row inset-shifts 16px right, the arrow turns `--accent`, a subtle lime wash slides under it. Mono uppercase keys, display-font values.
+
+**Right column — message form**, posts to `/api/contact` via Resend serverless function. Fields: name, email, reason (select: sponsorship / mentor / partnership / outreach / judging / other), message. Submit button is a lime mono "TRANSMIT →" with translateY hover.
+
+**Mailto fallback** sits just below the submit row: `or email us direct: info@makemindsrobotics.org` — so the form is never a hard dependency. If JS is broken or Resend is down, the mailto link still works.
+
+Both halves stack into a single column on mobile.
 
 Build order: Home → shared design system tokens / components → Team → Programs → Robot → Contact → Sponsors → Achievements → Notebook.
 
@@ -227,9 +248,16 @@ makeminds-site/
 
 ## Content sourcing plan
 
-Per the user's choice: pull what we can from the current site + Instagram, fill gaps with placeholders.
+Per the user's choice: pull what we can from the current site + Instagram + FTC sources, fill gaps with placeholders.
 
-1. **Logo**: extract a clean vector. The current PNG is rasterized — trace in Figma or rebuild as SVG (lightbulb-in-circuit on a circle) so it scales and inverts cleanly. Stored as `public/logo.svg` with monochrome + accent variants.
+Already collected (2026-05-22):
+- Team identity confirmed via FTC-Events: **Team 23786 MakEMinds, Edison NJ, rookie 2023, 27 events across 2 seasons.**
+- Award history scraped end-to-end into `content/achievements.json` (Inspire 2nd 2025, Inspire 3rd 2024, Think, Control, multiple Finalist/Winning alliance captains at NJ Championship).
+- Original detailed logo PNG saved to `public/logo-full.png`.
+- Clean hand-built simplified brand mark saved to `public/logo-mark.svg` (uses `currentColor` — themeable to white/lime/dark per context).
+
+Still to gather:
+1. **Logo refinement**: simplified mark is built; may want a wordmark `logo-lockup.svg` (mark + "MakEMinds" set in chosen display font).
 2. **Mission copy**: lift verbatim from current site ("MakEMinds Robotics is a dynamic community…"). Tighten by ~30% for the new hero.
 3. **Hero photo**: the current robot-on-bench shot. Re-export at high res; apply duotone in component.
 4. **Achievements**: lift bullets from `/achievements`. Add years/places/events into `content/achievements.json`.

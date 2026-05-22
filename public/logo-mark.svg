@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="MakEMinds Robotics">
+  <title>MakEMinds Robotics</title>
+
+  <!-- outer frame: gear-toothed arc on top, smooth circular arc on bottom -->
+  <g stroke="currentColor">
+    <!-- gear teeth top (12 ticks across the top half) -->
+    <g stroke-width="2">
+      <line x1="100" y1="6"  x2="100" y2="16" />
+      <line x1="125" y1="10" x2="122" y2="20" />
+      <line x1="149" y1="22" x2="143" y2="30" />
+      <line x1="168" y1="40" x2="160" y2="46" />
+      <line x1="181" y1="64" x2="171" y2="68" />
+      <line x1="75"  y1="10" x2="78"  y2="20" />
+      <line x1="51"  y1="22" x2="57"  y2="30" />
+      <line x1="32"  y1="40" x2="40"  y2="46" />
+      <line x1="19"  y1="64" x2="29"  y2="68" />
+    </g>
+    <!-- top arc connecting the tooth bases -->
+    <path d="M 22 90 A 80 80 0 0 1 178 90" stroke-width="2.6" />
+    <!-- bottom arc, slightly broken for circuit insertions -->
+    <path d="M 178 90 A 80 80 0 0 1 134 168" stroke-width="2.6" />
+    <path d="M 66 168 A 80 80 0 0 1 22 90" stroke-width="2.6" />
+  </g>
+
+  <!-- robotic arm: 3-segment articulated, descending from upper-left to lightbulb -->
+  <g stroke-width="3" stroke="currentColor">
+    <!-- shoulder mount -->
+    <circle cx="36" cy="58" r="5.5" fill="none" />
+    <circle cx="36" cy="58" r="1.5" fill="currentColor" />
+    <!-- upper arm -->
+    <line x1="36" y1="58" x2="72" y2="50" />
+    <!-- elbow joint -->
+    <circle cx="72" cy="50" r="5" fill="none" />
+    <circle cx="72" cy="50" r="1.4" fill="currentColor" />
+    <!-- forearm -->
+    <line x1="72" y1="50" x2="98" y2="74" />
+    <!-- wrist joint -->
+    <circle cx="98" cy="74" r="4" fill="none" />
+    <!-- gripper: two-finger claw approaching bulb -->
+    <path d="M 98 74 L 106 84 L 100 92" />
+    <path d="M 98 74 L 110 76 L 114 82" />
+  </g>
+
+  <!-- central lightbulb -->
+  <g stroke="currentColor" stroke-width="2.4">
+    <!-- bulb -->
+    <circle cx="110" cy="104" r="20" fill="none" />
+    <!-- filament hint: two vertical lines + small loop -->
+    <path d="M 104 102 L 104 110 M 116 102 L 116 110" stroke-width="1.8" />
+    <path d="M 104 110 Q 110 116 116 110" stroke-width="1.8" fill="none" />
+    <!-- screw base: 3 horizontal stripes -->
+    <line x1="100" y1="126" x2="120" y2="126" />
+    <line x1="100" y1="130" x2="120" y2="130" />
+    <line x1="102" y1="134" x2="118" y2="134" />
+    <!-- contact tip -->
+    <path d="M 106 138 Q 110 142 114 138" fill="none" />
+  </g>
+
+  <!-- circuit traces fanning to the right (denser) -->
+  <g stroke="currentColor" stroke-width="1.8">
+    <path d="M 138 96 L 154 96 L 154 84 L 170 84" fill="none" />
+    <circle cx="170" cy="84" r="2.2" fill="currentColor" stroke="none" />
+    <path d="M 138 108 L 160 108 L 160 118 L 176 118" fill="none" />
+    <circle cx="176" cy="118" r="2.2" fill="currentColor" stroke="none" />
+    <path d="M 138 120 L 150 120 L 150 136 L 168 136" fill="none" />
+    <circle cx="168" cy="136" r="2.2" fill="currentColor" stroke="none" />
+    <!-- short stubs -->
+    <line x1="142" y1="78" x2="150" y2="78" />
+    <circle cx="150" cy="78" r="1.6" fill="currentColor" stroke="none" />
+  </g>
+
+  <!-- circuit traces fanning to the lower-left -->
+  <g stroke="currentColor" stroke-width="1.8">
+    <path d="M 86 134 L 70 134 L 70 148 L 54 148" fill="none" />
+    <circle cx="54" cy="148" r="2.2" fill="currentColor" stroke="none" />
+    <path d="M 92 144 L 80 156 L 60 156" fill="none" />
+    <circle cx="60" cy="156" r="2.2" fill="currentColor" stroke="none" />
+    <path d="M 100 148 L 100 160 L 86 168" fill="none" />
+    <circle cx="86" cy="168" r="2.2" fill="currentColor" stroke="none" />
+  </g>
+
+  <!-- subtle base dot at very bottom of the ring (under bulb) -->
+  <circle cx="100" cy="176" r="2.2" fill="currentColor" stroke="none" />
+</svg>

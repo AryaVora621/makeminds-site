@@ -1,0 +1,40 @@
+{
+  "_source": "Scraped from FTC-Events.firstinspires.org on 2026-05-22. Verify before launch.",
+  "team": {
+    "number": 23786,
+    "name": "MakEMinds",
+    "city": "Edison",
+    "state": "NJ",
+    "country": "USA",
+    "rookieYear": 2023,
+    "eventsCompeted": 27
+  },
+  "seasons": [
+    {
+      "year": 2025,
+      "name": "DECODE",
+      "awards": [
+        { "name": "Inspire Award", "place": 2, "event": "Central Conference Upper Central League Tournament" },
+        { "name": "Finalist Alliance Captain", "event": "New Jersey Championship" },
+        { "name": "Parkway Division Winning Alliance Captain", "event": "New Jersey Championship" }
+      ]
+    },
+    {
+      "year": 2024,
+      "name": "INTO THE DEEP",
+      "awards": [
+        { "name": "Inspire Award", "place": 3, "event": "Central Conference Upper Central League Tournament" },
+        { "name": "Think Award", "event": "Central Conference Upper Central League Tournament" },
+        { "name": "Control Award", "event": "New Jersey Championship" },
+        { "name": "Turnpike Division Finalist Alliance Captain", "event": "New Jersey Championship" }
+      ]
+    },
+    {
+      "year": 2023,
+      "name": "CENTERSTAGE",
+      "awards": [
+        { "name": "Finalist Alliance · 1st Team Selected", "event": "Central Conference Tournament" }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import programsData from "@/content/programs.json";
 import SectionLabel from "../_components/layout/SectionLabel";
 import HairlineDivider from "../_components/layout/HairlineDivider";
+import Reveal from "../_components/effects/Reveal";
 
 type Program = {
   id: string;
@@ -44,10 +45,12 @@ export default function ProgramsPage() {
 
       <section className="space-y-px bg-border">
         {programs.map((p, i) => (
-          <article
+          <Reveal
             key={p.id}
             id={p.id}
+            as="article"
             className="grid grid-cols-12 gap-6 bg-bg px-6 py-16 md:px-12 md:py-20 lg:px-20"
+            delay={50}
           >
             <div className="col-span-12 md:col-span-3">
               <p className="font-display text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.9] text-accent tabular-nums">
@@ -82,7 +85,7 @@ export default function ProgramsPage() {
                 </dl>
               ) : null}
             </div>
-          </article>
+          </Reveal>
         ))}
       </section>
 

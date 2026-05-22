@@ -4,11 +4,15 @@
   Top nav (PLAN §4). Mono uppercase labels. Hovering a label slides a 1px
   underline left→right and advances a counter (NN) next to the active item.
   Click on the menu pill opens MenuOverlay.
+
+  Scroll-aware backdrop: once we're past ~80px of scroll, the bar gets a
+  bg-bg/80 + backdrop-blur and a hairline bottom border. Over the hero it
+  stays fully transparent so the wireframe robot reads clean.
 */
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NAV, findActive } from "@/lib/nav";
 import { cn } from "@/lib/cn";
 import MenuOverlay from "./MenuOverlay";
@@ -18,13 +22,33 @@ export default function TopNav() {
   const active = findActive(pathname);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Reset scrolled state when route changes so the backdrop matches the
+  // new page's starting scroll position.
+  useEffect(() => {
+    setScrolled(window.scrollY > 80);
+  }, [pathname]);
 
   const counter = (hoverIndex ?? active?.index ?? 1).toString().padStart(2, "0");
 
   return (
     <header
       data-boot-fade
-      className="fixed inset-x-0 top-0 z-[80] flex items-center justify-between px-5 py-4 md:px-8 md:py-5"
+      className={cn(
+        "fixed inset-x-0 top-0 z-[80] flex items-center justify-between px-5 py-4 md:px-8 md:py-5",
+        "transition-[background-color,backdrop-filter,border-color] duration-300 ease-out",
+        scrolled
+          ? "border-b border-border bg-bg/80 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent",
+      )}
     >
       {/* Wordmark */}
       <Link

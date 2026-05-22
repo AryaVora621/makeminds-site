@@ -1,6 +1,7 @@
 import achievementsData from "@/content/achievements.json";
 import SectionLabel from "../_components/layout/SectionLabel";
 import HairlineDivider from "../_components/layout/HairlineDivider";
+import SeasonsTimeline from "./SeasonsTimeline";
 
 type EventRecord = {
   season: string;
@@ -14,21 +15,6 @@ type Award = {
   name: string;
   event: string;
 };
-
-const AWARD_KEYWORDS = [
-  "Inspire",
-  "Control",
-  "Think",
-  "Connect",
-  "Innovate",
-  "Motivate",
-  "Winning Alliance",
-  "Finalist Alliance",
-];
-
-function isAwardish(result: string): boolean {
-  return AWARD_KEYWORDS.some((k) => result.includes(k));
-}
 
 export const metadata = {
   title: "Achievements",
@@ -105,60 +91,7 @@ export default function AchievementsPage() {
           drag horizontally · or use trackpad
         </p>
 
-        <div className="mt-8 overflow-x-auto pb-4">
-          <div className="flex w-max gap-6">
-            {seasonOrder.map((key) => {
-              const sEvents = seasons[key];
-              const season = sEvents[0];
-              return (
-                <article
-                  key={key}
-                  className="flex w-[320px] shrink-0 flex-col gap-3 border-l border-border pl-5"
-                >
-                  <header>
-                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
-                      {season.year} · {season.season}
-                    </p>
-                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
-                      {sEvents.length} events
-                    </p>
-                  </header>
-                  <ol className="mt-2 flex flex-col gap-2">
-                    {sEvents.map((e, i) => {
-                      const award = isAwardish(e.result);
-                      return (
-                        <li
-                          key={`${key}-${i}`}
-                          className="border-l border-border pl-3"
-                          style={
-                            award
-                              ? {
-                                  borderColor: "var(--accent)",
-                                  boxShadow: "inset 2px 0 0 0 var(--accent)",
-                                }
-                              : undefined
-                          }
-                        >
-                          <p className="font-display text-[14px] font-semibold leading-tight text-fg">
-                            {e.name}
-                          </p>
-                          <p
-                            className={
-                              "mt-1 font-mono text-[10px] uppercase tracking-[0.16em] " +
-                              (award ? "text-accent" : "text-fg-muted")
-                            }
-                          >
-                            {e.result}
-                          </p>
-                        </li>
-                      );
-                    })}
-                  </ol>
-                </article>
-              );
-            })}
-          </div>
-        </div>
+        <SeasonsTimeline seasonOrder={seasonOrder} seasons={seasons} />
       </section>
     </main>
   );

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Space_Grotesk, Geist_Mono } from "next/font/google";
+import BootLoader from "./_components/effects/BootLoader";
+import TopHairline from "./_components/effects/TopHairline";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -51,7 +53,13 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${dmSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="bg-grain min-h-full flex flex-col">{children}</body>
+      <body className="bg-grain min-h-full flex flex-col">
+        <TopHairline />
+        <div data-boot-fade className="flex flex-1 flex-col">
+          {children}
+        </div>
+        <BootLoader />
+      </body>
     </html>
   );
 }

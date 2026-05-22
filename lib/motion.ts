@@ -31,11 +31,13 @@ export const headlineStagger = {
   ease: easing.outQuint,
 } as const;
 
-// Boot loader timing (PLAN §1). Total ~2.4s.
+// Boot loader timing. Total ~1.5s full / ~0.4s returning.
+// Tightened from PLAN's original 2.4s spec after first-pass review felt sluggish.
 export const bootTiming = {
-  charDelayMs: { min: 24, max: 60 },
-  postLineDelayMs: 80,
-  waitForEnterMs: 1200,
+  charDelayMs: { min: 4, max: 12 },
+  postLineDelayMs: 35,
+  postSequencePauseMs: 280,
+  handoffMs: 600,
   reducedMotionFadeMs: 200,
-  returningVisitorMs: 400,
+  returningVisitorMs: 250,
 } as const;

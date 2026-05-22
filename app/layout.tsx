@@ -6,6 +6,9 @@ import PageTransition from "./_components/effects/PageTransition";
 import KonamiTerminal from "./_components/effects/KonamiTerminal";
 import ConsoleBanner from "./_components/effects/ConsoleBanner";
 import DebugGrid from "./_components/effects/DebugGrid";
+import LenisProvider from "./_components/effects/LenisProvider";
+import Cursor from "./_components/effects/Cursor";
+import MouseGlow from "./_components/effects/MouseGlow";
 import TopNav from "./_components/nav/TopNav";
 import Footer from "./_components/layout/Footer";
 import "./globals.css";
@@ -68,6 +71,9 @@ export default function RootLayout({
         </div>
         <PageTransition />
         <BootLoader />
+        <LenisProvider />
+        <Cursor />
+        <MouseGlow />
         <KonamiTerminal />
         <ConsoleBanner />
         <DebugGrid />

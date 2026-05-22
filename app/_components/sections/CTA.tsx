@@ -32,6 +32,7 @@ export default function CTA() {
   return (
     <section
       id="cta"
+      data-glow="on"
       className="relative border-t border-border px-6 py-24 md:px-12 md:py-32 lg:px-20"
     >
       <SectionLabel index={6} label="Work with us" meta="three ways in" />

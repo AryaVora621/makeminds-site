@@ -21,6 +21,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
+      data-glow="on"
       className="relative isolate flex min-h-[88vh] flex-col px-6 pb-12 pt-10 md:px-12 md:pb-20 md:pt-16 lg:px-20"
     >
       {/* Top row: section label + viewport readout */}

@@ -33,7 +33,7 @@ export default function Headline({ lines }: Props) {
   return (
     <h1
       ref={ref}
-      className="font-display font-bold tracking-[-0.03em] text-[clamp(3rem,11vw,11rem)] leading-[0.92]"
+      className="font-display text-[clamp(3rem,11vw,11rem)] font-bold leading-[0.92] tracking-normal"
     >
       {lines.map((line, lineIdx) => {
         const chars = Array.from(line);

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import SectionLabel from "../_components/layout/SectionLabel";
 import HairlineDivider from "../_components/layout/HairlineDivider";
+import PageHero from "../_components/layout/PageHero";
 import PhotoFrame from "../_components/ui/PhotoFrame";
 
 // Read public/robot/ at build time. Whatever images live there appear in
@@ -64,22 +64,31 @@ export default function RobotPage() {
   const galleryPhotos = loadGalleryPhotos();
   return (
     <main className="relative">
-      <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
-        <SectionLabel index={4} label="Robot" meta="DECODE · 2025-26" />
-        <h1 className="mt-10 max-w-5xl font-display text-[clamp(2.8rem,8vw,6rem)] font-bold leading-[0.9] tracking-[-0.03em]">
+      <PageHero
+        index={4}
+        label="Robot"
+        meta="DECODE · 2025-26"
+        title={
+          <>
           The 2025-26<br />
           <span className="text-accent">DECODE</span> machine.
-        </h1>
-        <p className="mt-6 max-w-xl text-fg-muted leading-[1.6]">
-          Mecanum drive, cascade scoring lift, vision-assisted autonomous.
-          Iterating weekly. Photos and CAD renders land here as the season
-          progresses.
-        </p>
-      </section>
+          </>
+        }
+        stats={[
+          { label: "Mass", value: "16.2", detail: "kg" },
+          { label: "Drive", value: "MEC", detail: "mecanum" },
+          { label: "Auto", value: "04", detail: "routines" },
+          { label: "Vision", value: "TAG", detail: "apriltag" },
+        ]}
+        panelTitle="Robot Telemetry"
+        panelMeta="weekly iteration log"
+      >
+        Mecanum drive, cascade scoring lift, vision-assisted autonomous.
+        Iterating weekly. Photos and CAD renders land here as the season
+        progresses.
+      </PageHero>
 
-      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
-
-      <section className="px-6 pb-24 md:px-12 lg:px-20">
+      <section className="px-6 py-20 md:px-12 lg:px-20">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
           [a] / specs
         </p>

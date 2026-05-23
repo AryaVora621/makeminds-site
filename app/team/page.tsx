@@ -1,6 +1,7 @@
+import Image from "next/image";
 import teamData from "@/content/team.json";
-import SectionLabel from "../_components/layout/SectionLabel";
 import HairlineDivider from "../_components/layout/HairlineDivider";
+import PageHero from "../_components/layout/PageHero";
 import PhotoFrame from "../_components/ui/PhotoFrame";
 
 type Member = {
@@ -19,26 +20,69 @@ export const metadata = {
     "Roster of FTC Team 23786 MakEMinds — students and mentors.",
 };
 
+function PortraitPlaceholder({ name }: { name: string }) {
+  const initials = name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("");
+
+  return (
+    <div className="relative aspect-[4/5] overflow-hidden border border-border bg-bg-elev">
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,157,199,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,157,199,0.05)_1px,transparent_1px)] bg-[size:32px_32px]"
+      />
+      <Image
+        src="/logo-full.png"
+        alt=""
+        width={180}
+        height={180}
+        className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 object-contain opacity-20"
+        sizes="144px"
+      />
+      <div className="absolute inset-x-5 bottom-5 border-t border-border pt-4">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
+          portrait pending
+        </p>
+        <p className="mt-2 font-display text-4xl font-bold leading-none tracking-normal text-accent">
+          {initials || "MM"}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function TeamPage() {
   const members = teamData.members as Member[];
   const mentors = teamData.mentors as Mentor[];
 
   return (
     <main className="relative">
-      <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
-        <SectionLabel index={2} label="Team" meta="roster · 2025–26" />
-        <h1 className="mt-10 max-w-4xl font-display text-[clamp(2.6rem,7vw,5rem)] font-bold leading-[0.95] tracking-[-0.03em]">
+      <PageHero
+        index={2}
+        label="Team"
+        meta="roster · 2025–26"
+        title={
+          <>
           The students <span className="text-accent">who build</span> the robot.
-        </h1>
-        <p className="mt-6 max-w-xl text-fg-muted leading-[1.6]">
-          A small team. Every member owns at least one system end-to-end —
-          from CAD to drive practice to scouting alliances.
-        </p>
-      </section>
+          </>
+        }
+        stats={[
+          { label: "Students", value: members.length.toString().padStart(2, "0") },
+          { label: "Mentors", value: mentors.length.toString().padStart(2, "0") },
+          { label: "Season", value: "26" },
+          { label: "Team", value: "23786" },
+        ]}
+        panelTitle="Roster Manifest"
+        panelMeta="build · code · outreach"
+      >
+        A small team. Every member owns at least one system end-to-end, from
+        CAD to drive practice to scouting alliances.
+      </PageHero>
 
-      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
-
-      <section className="px-6 pb-24 md:px-12 lg:px-20">
+      <section className="px-6 py-20 md:px-12 lg:px-20">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
           [a] / students · {members.length.toString().padStart(2, "0")}
         </p>
@@ -67,8 +111,10 @@ export default function TeamPage() {
                   // it as LCP so the loader doesn't lazy-defer it.
                   priority={i < 3}
                 />
-              ) : null}
-              <h3 className="font-display text-[20px] font-semibold tracking-tight text-fg">
+              ) : (
+                <PortraitPlaceholder name={m.name} />
+              )}
+              <h3 className="font-display text-[20px] font-semibold tracking-normal text-fg">
                 {m.name}
               </h3>
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
@@ -102,8 +148,10 @@ export default function TeamPage() {
                   height={500}
                   aspect="aspect-[4/5]"
                 />
-              ) : null}
-              <h3 className="font-display text-[20px] font-semibold tracking-tight text-fg">
+              ) : (
+                <PortraitPlaceholder name={m.name} />
+              )}
+              <h3 className="font-display text-[20px] font-semibold tracking-normal text-fg">
                 {m.name}
               </h3>
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">

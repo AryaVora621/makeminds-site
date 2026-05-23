@@ -24,7 +24,7 @@ export default function Icon() {
           color: "#649dc7",
           fontSize: 22,
           fontWeight: 700,
-          letterSpacing: "-0.05em",
+          letterSpacing: 0,
           fontFamily: "system-ui",
           borderRadius: 4,
         }}

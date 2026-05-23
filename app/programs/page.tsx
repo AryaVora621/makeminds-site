@@ -1,6 +1,6 @@
 import programsData from "@/content/programs.json";
 import SectionLabel from "../_components/layout/SectionLabel";
-import HairlineDivider from "../_components/layout/HairlineDivider";
+import PageHero from "../_components/layout/PageHero";
 import Reveal from "../_components/effects/Reveal";
 
 type Program = {
@@ -33,17 +33,40 @@ export default function ProgramsPage() {
 
   return (
     <main className="relative">
-      <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
-        <SectionLabel index={3} label="Programs" meta="FTC · FLL · Outreach" />
-        <h1 className="mt-10 max-w-4xl font-display text-[clamp(2.6rem,7vw,5rem)] font-bold leading-[0.95] tracking-[-0.03em]">
+      <PageHero
+        index={3}
+        label="Programs"
+        meta="Outreach · FLL · FTC"
+        title={
+          <>
           Three programs.<br />
           <span className="text-accent">One pipeline.</span>
-        </h1>
-      </section>
-
-      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
+          </>
+        }
+        stats={[
+          { label: "Tracks", value: programs.length.toString().padStart(2, "0") },
+          { label: "FTC events", value: "27" },
+          { label: "FLL teams", value: "02" },
+          { label: "Reach / yr", value: "300+" },
+        ]}
+        panelTitle="Learning Pipeline"
+        panelMeta="competition · mentoring · outreach"
+      >
+        Students enter through outreach and FLL mentoring, then grow into FTC
+        builders who can own mechanical, software, strategy, and documentation
+        systems.
+      </PageHero>
 
       <section className="space-y-px bg-border">
+        <Reveal
+          as="p"
+          className="bg-bg px-6 py-8 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-dim md:px-12 lg:px-20"
+        >
+          Outreach{" "}
+          <span className="text-accent">→</span> FLL{" "}
+          <span className="text-accent">→</span> FTC
+          <span className="ml-4 text-fg-muted">entry to flagship</span>
+        </Reveal>
         {programs.map((p, i) => (
           <Reveal
             key={p.id}
@@ -61,7 +84,7 @@ export default function ProgramsPage() {
               </p>
             </div>
             <div className="col-span-12 md:col-span-8 md:col-start-5">
-              <h2 className="font-display text-[clamp(2rem,4.5vw,3rem)] font-semibold leading-tight tracking-tight text-fg">
+              <h2 className="font-display text-[clamp(2rem,4.5vw,3rem)] font-semibold leading-tight tracking-normal text-fg">
                 {p.name}
               </h2>
               <p className="mt-4 max-w-xl font-display text-[clamp(1.1rem,1.8vw,1.4rem)] font-medium text-fg-muted leading-[1.4]">
@@ -97,7 +120,7 @@ export default function ProgramsPage() {
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
                 {t.month}
               </span>
-              <span className="font-display text-[20px] font-semibold tracking-tight text-fg">
+              <span className="font-display text-[20px] font-semibold tracking-normal text-fg">
                 {t.phase}
               </span>
               <span className="text-[12px] leading-[1.55] text-fg-muted">

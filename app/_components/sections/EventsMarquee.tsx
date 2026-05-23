@@ -65,7 +65,7 @@ export default function EventsMarquee() {
               <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
                 {e.year} · {e.season}
               </span>
-              <span className="font-display text-[14px] font-semibold tracking-tight text-fg">
+              <span className="font-display text-[14px] font-semibold tracking-normal text-fg">
                 {e.name}
               </span>
               <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-muted">

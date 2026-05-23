@@ -179,9 +179,6 @@ export default function BootLoader() {
     typeNextChar();
 
     return () => clearTimers();
-    // typeNextChar closes over finish via the autoFinish path; finish is
-    // memoized via useCallback so it's stable across renders.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reduced, clearTimers, finish]);
 
   // Any key skips.

@@ -7,6 +7,7 @@
 import Link from "next/link";
 import achievementsData from "@/content/achievements.json";
 import SectionLabel from "../layout/SectionLabel";
+import Reveal from "../effects/Reveal";
 
 type Award = {
   year: number;
@@ -27,8 +28,8 @@ export default function LatestAchievement() {
       className="relative border-t border-border bg-bg-elev/40 px-6 py-24 md:px-12 md:py-32 lg:px-20"
     >
       <SectionLabel index={4} label="Latest" meta="most recent major award" />
-      <div className="mt-10 grid grid-cols-12 items-end gap-6">
-        <p className="col-span-12 font-display font-bold leading-[0.85] tracking-[-0.04em] text-[clamp(5rem,18vw,16rem)] tabular-nums text-accent md:col-span-6">
+      <Reveal as="div" stagger={140} className="mt-10 grid grid-cols-12 items-end gap-6">
+        <p className="col-span-12 font-display font-bold leading-[0.85] tracking-normal text-[clamp(5rem,18vw,16rem)] tabular-nums text-accent md:col-span-6">
           {latest.year}
         </p>
         <div className="col-span-12 md:col-span-6">
@@ -45,7 +46,7 @@ export default function LatestAchievement() {
             full timeline →
           </Link>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

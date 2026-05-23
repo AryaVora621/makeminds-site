@@ -64,7 +64,7 @@ export function renderOg({ title, meta = "FTC TEAM 23786", accent = "#649dc7" }:
             fontSize,
             fontWeight: 800,
             lineHeight: 0.92,
-            letterSpacing: "-0.04em",
+            letterSpacing: 0,
           }}
         >
           {lines.map((line, i) => (

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import sponsorsData from "@/content/sponsors.json";
 import SectionLabel from "../_components/layout/SectionLabel";
-import HairlineDivider from "../_components/layout/HairlineDivider";
+import PageHero from "../_components/layout/PageHero";
 
 type Sponsor = { name: string; url: string | null };
 type Tier = { id: string; label: string; blurb: string; sponsors: Sponsor[] };
@@ -14,21 +14,31 @@ export const metadata = {
 
 export default function SponsorsPage() {
   const tiers = sponsorsData.tiers as Tier[];
+  const sponsorCount = tiers.reduce((count, tier) => count + tier.sponsors.length, 0);
 
   return (
     <main className="relative">
-      <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
-        <SectionLabel index={6} label="Sponsors" meta="powering the build" />
-        <h1 className="mt-10 max-w-5xl font-display text-[clamp(2.8rem,8vw,6rem)] font-bold leading-[0.9] tracking-[-0.03em]">
+      <PageHero
+        index={6}
+        label="Sponsors"
+        meta="powering the build"
+        title={
+          <>
           Sponsors <span className="text-accent">build</span> the future.
-        </h1>
-        <p className="mt-6 max-w-xl text-fg-muted leading-[1.6]">
-          Robotics is expensive — competition fees, drivetrains, travel, food.
-          Sponsors absorb the cost so students focus on learning. Thank you.
-        </p>
-      </section>
-
-      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
+          </>
+        }
+        stats={[
+          { label: "Tiers", value: tiers.length.toString().padStart(2, "0") },
+          { label: "Sponsors", value: sponsorCount.toString().padStart(2, "0") },
+          { label: "Packet", value: "24h" },
+          { label: "Team", value: "23786" },
+        ]}
+        panelTitle="Sponsor Stack"
+        panelMeta="parts · travel · events · food"
+      >
+        Robotics is expensive: competition fees, drivetrains, travel, food.
+        Sponsors absorb the cost so students focus on learning. Thank you.
+      </PageHero>
 
       <section className="space-y-px bg-border">
         {tiers.map((tier, i) => (
@@ -73,7 +83,7 @@ export default function SponsorsPage() {
               label="Become a sponsor"
               meta="tax-deductible · 501(c)(3) sponsor org"
             />
-            <h2 className="mt-8 font-display text-[clamp(2rem,4.5vw,3rem)] font-semibold leading-tight tracking-tight">
+            <h2 className="mt-8 font-display text-[clamp(2rem,4.5vw,3rem)] font-semibold leading-tight tracking-normal">
               We&apos;ll send the packet within 24 hours.
             </h2>
             <p className="mt-4 max-w-xl text-fg-muted leading-[1.6]">

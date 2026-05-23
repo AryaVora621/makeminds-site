@@ -28,7 +28,7 @@ export default function RouteError({
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-warn">
           [err · 500] route faulted
         </p>
-        <h1 className="mt-6 font-display text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight tracking-[-0.02em]">
+        <h1 className="mt-6 font-display text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight tracking-normal">
           Something tripped a wire.
         </h1>
         <p className="mt-4 max-w-xl text-[14px] leading-[1.6] text-fg-muted">

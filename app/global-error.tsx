@@ -42,7 +42,7 @@ export default function GlobalError({ reset }: { reset: () => void }) {
               fontFamily:
                 "system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif",
               fontWeight: 700,
-              letterSpacing: "-0.02em",
+              letterSpacing: 0,
               marginTop: "1rem",
             }}
           >

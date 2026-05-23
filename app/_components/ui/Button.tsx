@@ -18,9 +18,9 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "rounded-none bg-accent text-bg hover:bg-accent-hi font-display font-semibold tracking-tight",
+    "rounded-none bg-accent text-bg hover:bg-accent-hi font-display font-semibold tracking-normal",
   ghost:
-    "rounded-none border border-border text-fg hover:border-accent hover:text-accent font-display font-medium tracking-tight",
+    "rounded-none border border-border text-fg hover:border-accent hover:text-accent font-display font-medium tracking-normal",
   terminal:
     "rounded-none font-mono uppercase tracking-[0.16em] text-accent hover:text-accent-hi",
 };

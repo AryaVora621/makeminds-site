@@ -37,8 +37,7 @@ function flagsIn(content, file) {
   const flags = [];
   // JSON: "__placeholder": true
   const jsonRx = /"__placeholder"\s*:\s*true/g;
-  let m;
-  while ((m = jsonRx.exec(content))) {
+  while (jsonRx.exec(content) !== null) {
     flags.push({ file, kind: "json" });
   }
   // Markdown frontmatter: __placeholder: true

@@ -9,10 +9,17 @@
   Focus management: on open we move focus to the close button and trap
   Tab inside the dialog; the previously focused element is restored on
   close. PLAN §4 specs the keyboard-test path.
+
+  Portaled to document.body: the overlay is `fixed inset-0` and must be
+  viewport-relative. TopNav's <header> applies a backdrop-filter once
+  scrolled, which establishes a containing block for fixed descendants
+  and would otherwise clamp this overlay to the header's small box. The
+  portal escapes that (and any future transformed/filtered ancestor).
 */
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { NAV } from "@/lib/nav";
 import { cn } from "@/lib/cn";
 
@@ -24,8 +31,19 @@ type Props = {
 
 export default function MenuOverlay({ open, onClose, activeHref }: Props) {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
+
+  // Portal target only exists in the browser. Gate the createPortal call on
+  // a post-mount flag so server render and first client render agree (no
+  // hydration mismatch) and document is guaranteed to exist. This one-shot
+  // commit-time flip is the standard SSR portal pattern, not a synchronizing
+  // effect; the lint rule's perf concern (cascading renders) does not apply.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -69,7 +87,9 @@ export default function MenuOverlay({ open, onClose, activeHref }: Props) {
     ? NAV.find((n) => n.index === hoverIndex)
     : NAV.find((n) => n.href === activeHref) ?? NAV[0];
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div
       id="mm-menu-overlay"
       ref={overlayRef}
@@ -150,7 +170,7 @@ export default function MenuOverlay({ open, onClose, activeHref }: Props) {
                 >
                   [{item.index.toString().padStart(2, "0")}]
                 </span>
-                <span className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1] tracking-[-0.02em]">
+                <span className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1] tracking-normal">
                   {item.label}
                 </span>
                 <span
@@ -187,6 +207,7 @@ export default function MenuOverlay({ open, onClose, activeHref }: Props) {
           </div>
         </aside>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

@@ -1,6 +1,6 @@
 import achievementsData from "@/content/achievements.json";
-import SectionLabel from "../_components/layout/SectionLabel";
 import HairlineDivider from "../_components/layout/HairlineDivider";
+import PageHero from "../_components/layout/PageHero";
 import SeasonsTimeline from "./SeasonsTimeline";
 
 type EventRecord = {
@@ -38,21 +38,30 @@ export default function AchievementsPage() {
 
   return (
     <main className="relative">
-      <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
-        <SectionLabel index={5} label="Achievements" meta="three seasons, climbing" />
-        <h1 className="mt-10 max-w-5xl font-display text-[clamp(2.8rem,8vw,6rem)] font-bold leading-[0.9] tracking-[-0.03em]">
+      <PageHero
+        index={5}
+        label="Achievements"
+        meta="three seasons, climbing"
+        title={
+          <>
           {team.eventsCompeted} events.<br />
           <span className="text-accent">{awards.length} major awards.</span>
-        </h1>
-        <p className="mt-6 max-w-xl text-fg-muted leading-[1.6]">
-          Rookie team since {team.rookieYear}. Compiled from FTC-Events on
-          import; ground truth is the FIRST scoring system.
-        </p>
-      </section>
+          </>
+        }
+        stats={[
+          { label: "Events", value: String(team.eventsCompeted) },
+          { label: "Awards", value: awards.length.toString().padStart(2, "0") },
+          { label: "Rookie", value: String(team.rookieYear) },
+          { label: "Seasons", value: seasonOrder.length.toString().padStart(2, "0") },
+        ]}
+        panelTitle="Results Archive"
+        panelMeta="ftc-events import · verify before launch"
+      >
+        Rookie team since {team.rookieYear}. Compiled from FTC-Events on
+        import; ground truth is the FIRST scoring system.
+      </PageHero>
 
-      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
-
-      <section className="px-6 pb-16 md:px-12 lg:px-20">
+      <section className="px-6 py-20 md:px-12 lg:px-20">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
           [a] / major awards
         </p>
@@ -70,7 +79,7 @@ export default function AchievementsPage() {
                   [{(i + 1).toString().padStart(2, "0")}]
                 </span>
               </div>
-              <p className="font-display text-[clamp(1.2rem,2.2vw,1.6rem)] font-semibold tracking-tight text-fg">
+              <p className="font-display text-[clamp(1.2rem,2.2vw,1.6rem)] font-semibold tracking-normal text-fg">
                 {a.name}
               </p>
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">

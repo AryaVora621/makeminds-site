@@ -6,6 +6,7 @@
 import Link from "next/link";
 import programsData from "@/content/programs.json";
 import SectionLabel from "../layout/SectionLabel";
+import Reveal from "../effects/Reveal";
 
 type Program = {
   id: string;
@@ -34,7 +35,11 @@ export default function ProgramsPreview() {
         </Link>
       </div>
 
-      <div className="mt-10 grid grid-cols-1 gap-px bg-border md:grid-cols-3">
+      <Reveal
+        as="div"
+        stagger={90}
+        className="mt-10 grid grid-cols-1 gap-px bg-border md:grid-cols-3"
+      >
         {programs.map((p, i) => (
           <Link
             key={p.id}
@@ -50,7 +55,7 @@ export default function ProgramsPreview() {
                   ages {p.ages}
                 </span>
               </div>
-              <h3 className="mt-6 font-display text-[clamp(1.5rem,2.8vw,2rem)] font-semibold tracking-tight text-fg group-hover:text-accent">
+              <h3 className="mt-6 font-display text-[clamp(1.5rem,2.8vw,2rem)] font-semibold tracking-normal text-fg group-hover:text-accent">
                 {p.name}
               </h3>
               <p className="mt-3 text-[14px] leading-[1.6] text-fg-muted">
@@ -79,7 +84,7 @@ export default function ProgramsPreview() {
             </span>
           </Link>
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }

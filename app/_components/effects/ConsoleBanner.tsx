@@ -26,12 +26,10 @@ export default function ConsoleBanner() {
     const w = window as unknown as { __mm_banner__?: boolean };
     if (w.__mm_banner__) return;
     w.__mm_banner__ = true;
-    // eslint-disable-next-line no-console
     console.log(
       "%c" + BANNER,
       "color: #649dc7; font-family: ui-monospace, monospace; line-height: 1.4;",
     );
-    // eslint-disable-next-line no-console
     console.log(
       "%cTip: ↑↑↓↓←→←→BA",
       "color: #8090a4; font-family: ui-monospace, monospace; font-size: 11px;",

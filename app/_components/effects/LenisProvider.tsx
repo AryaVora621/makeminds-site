@@ -11,7 +11,8 @@
   Lenis docs.
 */
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,6 +22,9 @@ if (typeof window !== "undefined") {
 }
 
 export default function LenisProvider() {
+  const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -33,6 +37,7 @@ export default function LenisProvider() {
       wheelMultiplier: 1,
       touchMultiplier: 1.5,
     });
+    lenisRef.current = lenis;
 
     // Bridge Lenis → ScrollTrigger.
     lenis.on("scroll", ScrollTrigger.update);
@@ -45,8 +50,28 @@ export default function LenisProvider() {
     return () => {
       gsap.ticker.remove(tick);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
+
+  // Jump to the top of every new route. Next's default scroll-to-top is
+  // defeated by Lenis holding its own scroll position (which is why next/prev
+  // landed the user at the BOTTOM of the new page), so reset Lenis's internal
+  // target directly; fall back to the window when Lenis is off (reduced
+  // motion / touch). Skip the very first render so we don't fight the boot.
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    const lenis = lenisRef.current;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true, force: true });
+    } else if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
 
   return null;
 }

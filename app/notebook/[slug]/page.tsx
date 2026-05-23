@@ -66,7 +66,7 @@ export default async function NotebookPost({ params }: Props) {
           meta={post.date}
           className="mt-8"
         />
-        <h1 className="mt-8 max-w-4xl font-display text-[clamp(2.2rem,5.5vw,4rem)] font-bold leading-[1.02] tracking-[-0.025em]">
+        <h1 className="mt-8 max-w-4xl font-display text-[clamp(2.2rem,5.5vw,4rem)] font-bold leading-[1.02] tracking-normal">
           {post.title}
         </h1>
         {post.tags.length ? (
@@ -116,7 +116,7 @@ export default async function NotebookPost({ params }: Props) {
             return (
               <h2
                 key={i}
-                className="mt-12 font-display text-[clamp(1.5rem,2.6vw,2rem)] font-semibold tracking-tight text-fg"
+                className="mt-12 font-display text-[clamp(1.5rem,2.6vw,2rem)] font-semibold tracking-normal text-fg"
               >
                 {node.text}
               </h2>
@@ -125,7 +125,7 @@ export default async function NotebookPost({ params }: Props) {
             return (
               <h3
                 key={i}
-                className="mt-8 font-display text-[clamp(1.2rem,2vw,1.5rem)] font-medium tracking-tight text-fg"
+                className="mt-8 font-display text-[clamp(1.2rem,2vw,1.5rem)] font-medium tracking-normal text-fg"
               >
                 {node.text}
               </h3>

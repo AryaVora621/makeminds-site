@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { listPosts } from "@/lib/notebook";
-import SectionLabel from "../_components/layout/SectionLabel";
-import HairlineDivider from "../_components/layout/HairlineDivider";
+import PageHero from "../_components/layout/PageHero";
 
 export const metadata = {
   title: "Notebook",
@@ -15,34 +14,46 @@ export default function NotebookIndex() {
 
   return (
     <main className="relative">
-      <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
-        <SectionLabel index={7} label="Notebook" meta="engineering log" />
-        <h1 className="mt-10 max-w-5xl font-display text-[clamp(2.8rem,8vw,6rem)] font-bold leading-[0.9] tracking-[-0.03em]">
+      <PageHero
+        index={7}
+        label="Notebook"
+        meta="engineering log"
+        title={
+          <>
           Build season,<br />
           <span className="text-accent">in writing.</span>
-        </h1>
-        <p className="mt-6 max-w-xl text-fg-muted leading-[1.6]">
-          Short technical posts from the build team — design decisions,
-          post-mortems, things that broke. Updated whenever something
-          notable ships.
-        </p>
-        {tags.length > 0 ? (
-          <ul className="mt-10 flex flex-wrap gap-3">
+          </>
+        }
+        stats={[
+          { label: "Posts", value: posts.length.toString().padStart(2, "0") },
+          { label: "Tags", value: tags.length.toString().padStart(2, "0") },
+          { label: "Latest", value: posts[0]?.date.slice(5, 7) ?? "--", detail: posts[0]?.date.slice(0, 4) },
+          { label: "Feed", value: "RSS" },
+        ]}
+        panelTitle="Engineering Log"
+        panelMeta="design reviews · post-mortems · build notes"
+      >
+        Short technical posts from the build team: design decisions,
+        post-mortems, things that broke. Updated whenever something
+        notable ships.
+      </PageHero>
+
+      {tags.length > 0 ? (
+        <section className="border-b border-border px-6 py-6 md:px-12 lg:px-20">
+          <ul className="flex flex-wrap gap-3">
             {tags.map((t) => (
               <li
                 key={t}
-                className="border border-border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-fg-muted"
+                className="border border-border bg-bg px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-fg-muted"
               >
                 #{t}
               </li>
             ))}
           </ul>
-        ) : null}
-      </section>
+        </section>
+      ) : null}
 
-      <HairlineDivider className="my-12 px-6 md:px-12 lg:px-20" />
-
-      <section className="px-6 pb-24 md:px-12 lg:px-20">
+      <section className="px-6 py-20 md:px-12 lg:px-20">
         <ul className="divide-y divide-border border-y border-border">
           {posts.length === 0 ? (
             <li className="py-10 font-mono text-[12px] uppercase tracking-[0.18em] text-fg-dim">

@@ -61,7 +61,7 @@ export default function TopNav() {
         <span className="grid h-7 w-7 place-items-center rounded-full border border-border text-accent transition-colors group-hover:border-accent">
           <span className="font-display text-[12px] font-bold leading-none">M</span>
         </span>
-        <span className="font-display text-[14px] font-semibold tracking-tight text-fg">
+        <span className="font-display text-[14px] font-semibold tracking-normal text-fg">
           MakEMinds
         </span>
         <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-fg-dim sm:inline">
@@ -107,6 +107,20 @@ export default function TopNav() {
         >
           ({counter}) / 08
         </span>
+        {/* Dedicated Contact CTA — always reachable from the bar, not just the
+            overlay. Accent-tinted to read as the primary action. */}
+        <Link
+          href="/contact"
+          aria-current={active?.href === "/contact" ? "page" : undefined}
+          className={cn(
+            "hidden items-center border px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors sm:inline-flex",
+            active?.href === "/contact"
+              ? "border-accent bg-accent/10 text-accent"
+              : "border-accent/40 text-accent hover:border-accent hover:bg-accent/10",
+          )}
+        >
+          Contact
+        </Link>
         <button
           type="button"
           onClick={() => setMenuOpen(true)}

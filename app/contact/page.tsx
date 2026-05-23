@@ -1,4 +1,5 @@
 import SectionLabel from "../_components/layout/SectionLabel";
+import PageHero from "../_components/layout/PageHero";
 import Accordion from "../_components/ui/Accordion";
 import ContactForm from "./ContactForm";
 
@@ -65,16 +66,27 @@ export default async function ContactPage({ searchParams }: Props) {
 
   return (
     <main className="relative">
-      <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
-        <SectionLabel index={8} label="Contact" meta="open channels" />
-        <h1 className="mt-10 max-w-5xl font-display text-[clamp(2.8rem,8vw,6rem)] font-bold leading-[0.9] tracking-[-0.03em]">
+      <PageHero
+        index={8}
+        label="Contact"
+        meta="open channels"
+        title={
+          <>
           Get in <span className="text-accent">touch.</span>
-        </h1>
-        <p className="mt-6 max-w-xl text-fg-muted leading-[1.6]">
-          Sponsor packets, mentor inquiries, partnership ideas, judging
-          requests, or just hi from another team — pick a channel.
-        </p>
-      </section>
+          </>
+        }
+        stats={[
+          { label: "Channels", value: CHANNELS.length.toString().padStart(2, "0") },
+          { label: "Reply", value: "48h" },
+          { label: "Packet", value: "24h" },
+          { label: "Email", value: "ON" },
+        ]}
+        panelTitle="Open Comms"
+        panelMeta="sponsor · mentor · partner · judge"
+      >
+        Sponsor packets, mentor inquiries, partnership ideas, judging
+        requests, or just hi from another team. Pick a channel.
+      </PageHero>
 
       <section className="grid grid-cols-1 gap-px bg-border md:grid-cols-2">
         <div className="bg-bg p-6 md:p-12 lg:p-16">
@@ -84,16 +96,16 @@ export default async function ContactPage({ searchParams }: Props) {
           <ul className="mt-8 divide-y divide-border border-y border-border">
             {CHANNELS.map((c) => {
               const Inner = (
-                <div className="flex w-full items-baseline gap-5 py-5 transition-[padding] hover:pl-4">
+                <div className="grid w-full grid-cols-[1fr_auto] gap-2 py-5 transition-[padding] hover:pl-4 sm:grid-cols-[auto_1fr_auto] sm:items-baseline sm:gap-5">
                   <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-dim">
                     [{c.code} / {c.label.toUpperCase()}]
                   </span>
-                  <span className="flex-1 font-display text-[clamp(1.2rem,2.2vw,1.6rem)] font-medium text-fg">
+                  <span className="col-span-2 font-display text-[clamp(1.2rem,2.2vw,1.6rem)] font-medium text-fg break-words sm:col-span-1">
                     {c.value}
                   </span>
                   <span
                     aria-hidden
-                    className="font-mono text-fg-dim transition-colors group-hover:text-accent"
+                    className="row-start-1 col-start-2 justify-self-end font-mono text-fg-dim transition-colors group-hover:text-accent sm:row-auto sm:col-auto"
                   >
                     {c.arrow}
                   </span>

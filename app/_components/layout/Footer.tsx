@@ -16,7 +16,7 @@ export default function Footer() {
     >
       <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
         <div className="md:col-span-2">
-          <p className="font-display text-2xl font-semibold tracking-tight text-fg">
+          <p className="font-display text-2xl font-semibold tracking-normal text-fg">
             MakEMinds Robotics
           </p>
           <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">

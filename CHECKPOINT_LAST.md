@@ -2,7 +2,21 @@
 
 ## Last updated
 
-2026-05-22 (latest) — Branch `feature/phase-0-scaffold` is now **27 commits ahead of `main`**. Latest waves (autonomous, code-review + SEO + security + brand):
+2026-05-23 (b) — Follow-up fixes after first review:
+
+- **Reveal blank-screen regression FIXED.** The first GSAP rewrite hid content by default (`opacity-0`) and depended on the tween completing to reveal it; when the imperative path misbehaved, `/programs` and the CTA stayed invisible. Rewrote `Reveal.tsx` to be **fail-safe**: content renders VISIBLE in SSR/no-JS, JS applies the hidden state then reveals via CSS transitions (clip-wipe + rise + fade, `cubic-bezier(0.22,1,0.36,1)`), and a settle timer clears all inline styles (so a failed observer can never leave content hidden, and the clip can't crop focus rings at rest). DO NOT make Reveal hide content in SSR markup again — keep it fail-safe.
+- **End-of-page prev/next nav added.** `app/_components/nav/PageEndNav.tsx` (cyclical, NAV order) rendered once in `layout.tsx` between content and Footer; self-hides on non-primary routes (notebook slugs etc.). Verified present on all 8 primary routes.
+- **Contact page already existed** and matches PLAN §186 (two-column channels + Resend TRANSMIT form + FAQ accordion). Not rebuilt; flagged to user pending their other-chat spec.
+- Verified: `tsc` clean, `eslint` clean, all 8 routes → 200 with content.
+
+2026-05-23 (a) — UX/polish wave (4 parallel tracks: 3 background agents + main). All verified: `tsc --noEmit` clean, `eslint` clean on all touched files, `content-check` pass, `GET /` and `/programs` → 200. **Visual review pending with the user** (per standing instruction, I do not self-test visuals).
+
+- **Menu breaks on scroll (root cause fixed):** `MenuOverlay` was a child of the `<header>`; once scrolled, the header's `backdrop-blur` established a containing block so the overlay's `fixed inset-0` collapsed to the header box and the page showed through. Fix: `MenuOverlay` now renders via `createPortal(document.body)` (SSR-guarded `mounted` flag) — viewport-relative regardless of any transformed/filtered ancestor. Scroll-lock, focus trap, Esc, `activeHref` preview all preserved. `TopNav.tsx` unchanged.
+- **Sidebar (`HudRail`) overlap:** redesigned. Gate moved `lg:flex` → `xl:flex`, bounded to a `w-12` (48px) gutter column at `left-5`, dropped the 7-item stacked list (the overflowing part) for an active-only readout (index `NN/NN`, vertical rail + position-marker dot, %, vertical-writing-mode active label). Accent only on fill/marker/active index. Reduced-motion snaps. Scroll/active-section logic unchanged; `sections` prop API unchanged.
+- **Programs pipeline order:** `content/programs.json` reordered FTC,FLL,Outreach → **Outreach, FLL, FTC** (entry→flagship; auto-renumbers 01→03). Hero `meta` → "Outreach · FLL · FTC". Added a mono `Outreach → FLL → FTC` pipeline indicator atop the programs list (accent only on the arrows). `__placeholder` on outreach preserved.
+- **Scroll animation upgraded (was plain fade-up, the PLAN's forbidden "float-up-from-below"):** `Reveal.tsx` rebuilt as a manual GSAP clip-wipe — each target uncovers top-down (`clip-path inset` driven by tween progress) while rising + fading, `power3.out`, with optional `stagger` to cascade direct children. IO fires it once (no scroll scrub, no ScrollTrigger). Flash-free + re-render-safe (single `setDone` on complete; inline styles + will-change + clip cleared at rest so focus rings aren't cropped). Reduced-motion commits final state instantly. GSAP was already in the bundle (Mission/Lenis), so no added cost. Applied to the bare homepage sections that had no entrance choreography: `ProgramsPreview` (cards cascade), `LatestAchievement` (year→copy cascade), `CTA` (block reveal — single block to avoid fighting `MagneticCard` transforms). Programs page picks up the upgrade automatically. `Mission`'s bespoke scrubbed timeline left untouched.
+
+### Earlier — 2026-05-22 (latest) — Branch `feature/phase-0-scaffold` is now **27 commits ahead of `main`**. Latest waves (autonomous, code-review + SEO + security + brand):
 
 - Brand: replaced default Next favicon with generated M-mark via `app/icon.tsx` + `app/apple-icon.tsx`; added `app/manifest.ts` so the site brands correctly when added to a home screen.
 - Security: 5 baseline headers (HSTS preload, nosniff, X-Frame DENY, Referrer-Policy strict-origin, Permissions-Policy disabling camera/mic/geo/FLoC), verified live.

@@ -80,7 +80,7 @@ The `SPECS` array (mass, drivetrain, etc.) and `SUBSYSTEMS` array are inlined in
 - Top speed `1.8 m/s`
 - Auto routines `04`
 
-Swap these for real measurements. The gallery cells are placeholders (`[ fig.NN — pending ]`) — drop real photos into `public/robot/` and replace the placeholder div with `<PhotoFrame>` wrappers.
+Swap these for real measurements. **Gallery**: just drop `.jpg` / `.png` / `.webp` / `.avif` files into `public/robot/` — the page reads the directory at build time and renders each through `<PhotoFrame>` (brand duotone + grain) automatically, alphabetical by filename. No JSON wiring needed. When the directory is empty, the page falls back to the `[ fig.NN — pending ]` placeholder cells.
 
 ## 6 · Notebook posts — `content/notebook/*.md`
 

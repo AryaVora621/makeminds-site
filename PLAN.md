@@ -159,7 +159,7 @@ GSAP ScrollTrigger pinned timelines on key sections:
 
 ### 6. Page transitions
 
-App Router page transitions use a single horizontal panel sweep: lime panel slides in from right covering everything, page swaps under it, panel slides off-left. ~520ms total. Kills the "different site" feel of route changes.
+App Router page transitions use a single horizontal panel sweep: an `--accent` (steel-blue) panel slides in from right covering everything, page swaps under it, panel slides off-left. ~520ms total. Kills the "different site" feel of route changes.
 
 ### 7. Easter eggs
 
@@ -196,9 +196,9 @@ The contact page splits in two:
 [ 04 / LOCATION ]  Edison, NJ — USA                ·
 ```
 
-Each row is a real anchor (`mailto:`, IG, YouTube). On hover: the row inset-shifts 16px right, the arrow turns `--accent`, a subtle lime wash slides under it. Mono uppercase keys, display-font values.
+Each row is a real anchor (`mailto:`, IG, YouTube). On hover: the row inset-shifts 16px right, the arrow turns `--accent`, a subtle `--accent` wash slides under it. Mono uppercase keys, display-font values.
 
-**Right column — message form**, posts to `/api/contact` via Resend serverless function. Fields: name, email, reason (select: sponsorship / mentor / partnership / outreach / judging / other), message. Submit button is a lime mono "TRANSMIT →" with translateY hover.
+**Right column — message form**, posts to `/api/contact` via Resend serverless function. Fields: name, email, reason (select: sponsorship / mentor / partnership / outreach / judging / other), message. Submit button is an `--accent` (steel-blue) mono "TRANSMIT →" with translateY hover.
 
 **Mailto fallback** sits just below the submit row: `or email us direct: info@makemindsrobotics.org` — so the form is never a hard dependency. If JS is broken or Resend is down, the mailto link still works.
 
@@ -273,7 +273,7 @@ Already collected (2026-05-22):
 - Team identity confirmed via FTC-Events: **Team 23786 MakEMinds, Edison NJ, rookie 2023, 27 events across 2 seasons.**
 - Award history scraped end-to-end into `content/achievements.json` (Inspire 2nd 2025, Inspire 3rd 2024, Think, Control, multiple Finalist/Winning alliance captains at NJ Championship).
 - Original detailed logo PNG saved to `public/logo-full.png`.
-- Clean hand-built simplified brand mark saved to `public/logo-mark.svg` (uses `currentColor` — themeable to white/lime/dark per context).
+- Clean hand-built simplified brand mark saved to `public/logo-mark.svg` (uses `currentColor` — themeable to white / steel-blue / dark per context).
 
 Still to gather:
 1. **Logo refinement**: simplified mark is built; may want a wordmark `logo-lockup.svg` (mark + "MakEMinds" set in chosen display font).

@@ -14,7 +14,7 @@ Project-specific operating rules. Read this AFTER `~/.claude/CLAUDE.md` at sessi
 - The whole point is the **design quality**. Do not ship anything that looks like an AI-generated landing page. If a section feels generic, kill it and redo it. The user's bar is "shock a pro dev."
 - **Motion is a material, not decoration.** Every animation has a purpose: hierarchy, navigation, focus, delight. No idle pulse effects, no infinite gradients, no float-up-from-below on every block.
 - **Monospace is structural** — use it for section labels, metadata, numbers, status. Not for body copy. Not as a "techy" decoration.
-- **One accent color**, used sparingly. `#C8FF00` lime. If the page has more than ~5% accent coverage, dial it back.
+- **One accent color**, used sparingly. `#649dc7` steel-blue, sampled from the logo SVG (see `PLAN.md` color tokens). If the page has more than ~5% accent coverage, dial it back.
 - **No raw jpegs** floating on the dark background. Every photo gets the duotone + grain treatment via `<PhotoFrame>`.
 - **Respect `prefers-reduced-motion`** on every motion primitive. Test with macOS Accessibility setting toggled.
 - **Performance budget is non-negotiable**: LCP < 2.0s on 4G mobile, JS < 220KB gz on first nav.

@@ -47,3 +47,4 @@ coverage/
 AUTONOMOUS_LOG.md
 CHECKPOINT_STEP_*.md
 BLOCKED.md
+.tmp-screenshots/

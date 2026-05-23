@@ -139,6 +139,8 @@ export default function RobotPage() {
                   width={800}
                   height={600}
                   caption={`FIG. ${(i + 1).toString().padStart(2, "0")} — DECODE / 2025`}
+                  // First photo is the gallery LCP candidate; rest lazy.
+                  priority={i === 0}
                 />
               ))
             : Array.from({ length: 6 }).map((_, i) => (

@@ -63,6 +63,9 @@ export default function TeamPage() {
                   width={400}
                   height={500}
                   aspect="aspect-[4/5]"
+                  // First row is above the fold on every viewport; hint
+                  // it as LCP so the loader doesn't lazy-defer it.
+                  priority={i < 3}
                 />
               ) : null}
               <h3 className="font-display text-[20px] font-semibold tracking-tight text-fg">

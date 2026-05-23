@@ -1,6 +1,7 @@
 import teamData from "@/content/team.json";
 import SectionLabel from "../_components/layout/SectionLabel";
 import HairlineDivider from "../_components/layout/HairlineDivider";
+import PhotoFrame from "../_components/ui/PhotoFrame";
 
 type Member = {
   name: string;
@@ -55,6 +56,15 @@ export default function TeamPage() {
                   {m.year}
                 </span>
               </div>
+              {m.headshot ? (
+                <PhotoFrame
+                  src={m.headshot}
+                  alt={`${m.name}, ${m.role}`}
+                  width={400}
+                  height={500}
+                  aspect="aspect-[4/5]"
+                />
+              ) : null}
               <h3 className="font-display text-[20px] font-semibold tracking-tight text-fg">
                 {m.name}
               </h3>
@@ -81,6 +91,15 @@ export default function TeamPage() {
               key={i}
               className="flex flex-col gap-4 bg-bg p-6"
             >
+              {m.headshot ? (
+                <PhotoFrame
+                  src={m.headshot}
+                  alt={`${m.name}, ${m.role}`}
+                  width={400}
+                  height={500}
+                  aspect="aspect-[4/5]"
+                />
+              ) : null}
               <h3 className="font-display text-[20px] font-semibold tracking-tight text-fg">
                 {m.name}
               </h3>

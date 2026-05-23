@@ -1,5 +1,24 @@
+import fs from "node:fs";
+import path from "node:path";
 import SectionLabel from "../_components/layout/SectionLabel";
 import HairlineDivider from "../_components/layout/HairlineDivider";
+import PhotoFrame from "../_components/ui/PhotoFrame";
+
+// Read public/robot/ at build time. Whatever images live there appear in
+// the gallery with the brand duotone — no JSON wiring required. Empty
+// directory or missing directory falls through to the placeholder cells.
+function loadGalleryPhotos(): string[] {
+  const dir = path.join(process.cwd(), "public", "robot");
+  try {
+    return fs
+      .readdirSync(dir)
+      .filter((f) => /\.(jpe?g|png|webp|avif)$/i.test(f))
+      .sort()
+      .map((f) => `/robot/${f}`);
+  } catch {
+    return [];
+  }
+}
 
 export const metadata = {
   title: "Robot",
@@ -42,6 +61,7 @@ const SUBSYSTEMS = [
 ];
 
 export default function RobotPage() {
+  const galleryPhotos = loadGalleryPhotos();
   return (
     <main className="relative">
       <section className="px-6 pb-12 pt-10 md:px-12 md:pt-16 lg:px-20">
@@ -100,21 +120,37 @@ export default function RobotPage() {
       <section className="px-6 pb-24 md:px-12 lg:px-20">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
           [c] / gallery
+          {galleryPhotos.length > 0
+            ? ` · ${galleryPhotos.length.toString().padStart(2, "0")}`
+            : null}
         </p>
-        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
-          placeholder — real photos drop after first regional
-        </p>
+        {galleryPhotos.length === 0 ? (
+          <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
+            placeholder — drop photos in public/robot/ to fill
+          </p>
+        ) : null}
         <div className="mt-8 grid grid-cols-2 gap-px bg-border md:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="relative aspect-[4/3] bg-bg-elev"
-            >
-              <div className="absolute inset-0 grid place-items-center font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
-                [ fig.{(i + 1).toString().padStart(2, "0")} — pending ]
-              </div>
-            </div>
-          ))}
+          {galleryPhotos.length > 0
+            ? galleryPhotos.map((src, i) => (
+                <PhotoFrame
+                  key={src}
+                  src={src}
+                  alt={`Robot — figure ${(i + 1).toString().padStart(2, "0")}`}
+                  width={800}
+                  height={600}
+                  caption={`FIG. ${(i + 1).toString().padStart(2, "0")} — DECODE / 2025`}
+                />
+              ))
+            : Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="relative aspect-[4/3] bg-bg-elev"
+                >
+                  <div className="absolute inset-0 grid place-items-center font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
+                    [ fig.{(i + 1).toString().padStart(2, "0")} — pending ]
+                  </div>
+                </div>
+              ))}
         </div>
       </section>
     </main>

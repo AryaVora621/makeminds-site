@@ -56,6 +56,33 @@ html,
 body {
   background: var(--bg);
   color: var(--fg);
+  /* Firefox + future spec scrollbar color (works on macOS Safari 16+). */
+  scrollbar-color: var(--border) var(--bg);
+}
+
+/* WebKit (Chrome, Safari, Edge) — explicit dark scrollbar so it doesn't
+   render as the default light system bar on a near-black page. Subtle:
+   thin track, accent on active drag. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-dim);
+}
+::-webkit-scrollbar-thumb:active {
+  background: var(--accent-dim);
+}
+::-webkit-scrollbar-corner {
+  background: var(--bg);
 }
 
 /*

@@ -36,8 +36,13 @@ export default function EventsMarquee() {
   return (
     <section
       id="events"
+      aria-label="Event ticker — decorative; full list on /achievements"
       className="relative border-y border-border bg-bg-elev/40 py-6"
     >
+      {/* aria-hidden: the marquee is decorative and duplicates the
+          /achievements page; without this, screen readers would announce
+          every event as it scrolls past. */}
+      <div aria-hidden="true">
       <Marquee durationSec={220} gapPx={24}>
         {events.map((e, i) => {
           const award = isAwardish(e.result);
@@ -70,6 +75,7 @@ export default function EventsMarquee() {
           );
         })}
       </Marquee>
+      </div>
     </section>
   );
 }

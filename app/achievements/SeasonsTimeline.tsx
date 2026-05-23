@@ -43,7 +43,14 @@ export default function SeasonsTimeline({ seasonOrder, seasons }: Props) {
   return (
     <div
       ref={ref}
-      className="mt-8 cursor-grab overflow-x-auto pb-4 [&.mm-dragging]:cursor-grabbing"
+      // a11y: make the scrolling region a labelled focusable landmark so
+      // keyboard users can tab here and use arrow keys to scroll. Cards
+      // inside are static text, so without this they couldn't reach
+      // off-screen seasons at all.
+      role="region"
+      aria-label="Season timeline — use arrow keys to scroll"
+      tabIndex={0}
+      className="mt-8 cursor-grab overflow-x-auto pb-4 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent [&.mm-dragging]:cursor-grabbing"
       style={{ scrollbarWidth: "thin" }}
     >
       <div className="flex w-max gap-6">

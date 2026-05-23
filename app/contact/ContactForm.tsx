@@ -118,16 +118,21 @@ export default function ContactForm({ defaultReason }: Props) {
             info@makemindsrobotics.org
           </a>
         </p>
-        {status === "sent" ? (
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
-            ✓ message received. we&apos;ll reply within 48 hours.
-          </p>
-        ) : null}
-        {status === "error" ? (
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-warn">
-            ✗ {errorMsg ?? "couldn't send."} use the mailto link above.
-          </p>
-        ) : null}
+        {/* aria-live region: a single persistent node so screen readers
+            announce submit results. Conditional <p> blocks would mount
+            without announcement. */}
+        <div role="status" aria-live="polite" aria-atomic="true">
+          {status === "sent" ? (
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
+              ✓ message received. we&apos;ll reply within 48 hours.
+            </p>
+          ) : null}
+          {status === "error" ? (
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-warn">
+              ✗ {errorMsg ?? "couldn't send."} use the mailto link above.
+            </p>
+          ) : null}
+        </div>
       </div>
     </form>
   );

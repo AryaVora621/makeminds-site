@@ -19,6 +19,21 @@
   color-scheme: dark;
 }
 
+/*
+  prefers-contrast: more — Windows high-contrast mode and macOS Increase
+  Contrast. Bump every "muted/dim" tier toward full foreground and brighten
+  the border so structural lines actually read. Accent stays the same; it's
+  already AA against --bg.
+*/
+@media (prefers-contrast: more) {
+  :root {
+    --fg-muted: #d4dde6;
+    --fg-dim: #a4afbb;
+    --border: #4a5460;
+    --accent-dim: #4f86b3;
+  }
+}
+
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-elev: var(--bg-elev);
